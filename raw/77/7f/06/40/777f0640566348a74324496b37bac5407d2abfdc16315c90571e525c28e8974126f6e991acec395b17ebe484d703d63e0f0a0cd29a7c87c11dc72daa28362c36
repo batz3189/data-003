@@ -1,0 +1,451 @@
+{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fswiss\fcharset0 Arial;}}
+\viewkind4\uc1\pard\f0\fs20 .htaccess tips and tricks\par
+<ifModule>\par
+ clever stuff here\par
+</ifModule>\par
+ \par
+introduction to .htaccess\par
+This work in progress is some collected wisdom, stuff I've learned on the topic of .htaccess hacking, commands I've used successfully in the past, on a variety of server setups, and in most cases still do. You may have to tweak the examples some to get the desired result, though, and a reliable test server is a powerful ally, preferably one with a very similar setup to your "live" server. okay, to begin..\par
+\par
+.htaccess files are invisible\par
+\par
+There's a good reason why you won't see .htaccess files on the web; almost every web server in the world is configured to ignore them, by default. Same goes for most operating systems. Mainly it's the dot "." at the start, you see?\par
+\par
+a win32 apache mirror of corz.org\par
+peecee Explorer view with invisible files\par
+\par
+If you don't  see, you'll need to disable your operating system's invisible file functions, or use a text editor that allows you to open hidden files, something like bbedit on the Mac platform. On windows, showing invisibles in explorer should allow any text editor to open them, and most decent editors to save them too (even notepad can save them if you use double-quotes around the name.. ".htaccess"). Linux dudes know how to find them without any help from me.\par
+\par
+Mac Finder view with invisible files\par
+that same folder, as seen from Mac OS X\par
+\par
+\par
+In both images, the operating system has been instructed to display invisible files. ugly, but necessary sometimes. (I deleted the "darkstat.php" file just after snapping the mac screenshot, moved that redirection to my 404 script, is why it's in the mac version, and not the peecee one!)\par
+\par
+ \par
+What are .htaccess files anyway?\par
+Simply put, they are invisible plain text files where one can store server directives. Server directives are anything you might put in an Apache config file (httpd.conf) or even a php ini file (php.ini, that is, unless you are running under phpsuexec, in which case you would use an actual  php.ini for those), but unlike those "master" directive files, these .htaccess directives apply only to the folder in which the .htaccess file resides, and all the folders inside.\par
+\par
+This ability to plant .htaccess files in any directory of our site allows us to set up a finely-grained tree of server directives, each subfolder inheriting properties from its parent, whilst at the same time adding to, or over-riding certain directives with its own .htaccess file. For instance, you could use .htacces to enable indexes all over your site, and then deny indexing in only certain subdirectories, or deny index listings site-wide, and allow indexing in certain subdirectories. One line in the .htaccess file in your root and your whole site is altered. From here on, I'll probably refer to the main .htaccess in the root of your website as "the master .htaccess file", or "main" .htaccess file.\par
+\par
+There's a small performance penalty for all this .htaccess file checking, but not noticable, and you'll find most of the time it's just on and there's nothing you can do about it anyway, so let's make the most of it..\par
+\par
+ \par
+What can I do with .htaccess files?\par
+Almost any directive that you can put inside an httpd.conf file will also function perfectly inside an .htacccess file. Unsurprisingly, the most common use of .htaccess is to..\par
+\par
+control access\par
+.htaccess is most often used to restrict or deny access to individual files and folders. A typical example would be an "includes" folder. Your site's pages can call these included scripts all they like, but you don't want users accessing these files directly. In that case you would drop an .htaccess file in the includes folder with content something like this..\par
+\par
+    NO ENTRY!\par
+    # no one gets in here!\par
+    deny from all\par
+\par
+\par
+which would deny ALL direct access to ANY files in that folder. You can be more specific with your conditions, for instance limiting access to a particular IP range, here's a handy top-level rule for a local test server..\par
+\par
+    NO ENTRY outside of the LAN!\par
+    # no nasty crackers in here!\par
+    order deny,allow\par
+    deny from all\par
+    allow from 192.168.0.0/24\par
+    # this would do the same thing..\par
+    #allow from 192.168.0\par
+\par
+\par
+Generally these sorts of requests would bounce off your firewall anyway, but on a live server (like my dev mirror is) they become useful for filtering out undesirable IP blocks, known risks, lots of things. Whatever, the user gets a 403 "access denied" error page in their client software (browser, usually), which does little more than get the message across. This is probably fine for most situations, but in part two I'll demonstrate some cooler ways to deny access.\par
+\par
+ \par
+password protected directories\par
+The next most obvious use for our .htaccess files is to allow access to only specific users, or user groups, in other words; password protected folders. a simple authorisation mechanism might look something like this..\par
+\par
+    a simple sample .htaccess file for password protection:\par
+    AuthType Basic\par
+    AuthName "restricted area"\par
+    AuthUserFile /usr/local/var/www/html/.htpasses\par
+    require valid-user\par
+\par
+\par
+You can use this same mechanism to limit only certain kinds of requests, too..\par
+\par
+    only valid users can POST in here, anyone can GET, PUT, etc:\par
+    AuthType Basic\par
+    AuthName "restricted area"\par
+    AuthUserFile /usr/local/var/www/html/.htpasses\par
+    <Limit POST>\par
+     require valid-user\par
+    </Limit>\par
+\par
+\par
+You can find loads of online examples of how to setup authorisation using .htaccess, so long as you have a real user with a real password in a real password file..\par
+\par
+htpasswd -c /usr/local/var/www/html/.htpasses jimmy\par
+\par
+..the above will work just fine. (htpasswd is a tool that comes with apache, specifically for making and updating password files. Naming the password file ".htpasses" is a habit from when I had to keep that file inside the web site itself, and as web servers are configured to ignore files starting ".ht" they too, remain hidden. If you keep your password file outside the web root (a much better idea), then you can call it whatever you like.) Okay, that's that out of the way.\par
+\par
+Those examples assume that your web server supports "Basic" http authorisation, as far as I know they all do (it's in the Apache core). The only trouble is, some browsers aren't sending password this way any more, personally I'm looking to php to cover my authorisation needs. Basic auth works okay though, even if it isn't actually very secure (your password travels in plain text over the wire, not clever).\par
+\par
+ \par
+500 error\par
+If you add something that the server doesn't understand or support, you will get a 500 error page, aka.. "the server did a boo-boo". Even directives that work perfectly on your test server at home may fail dramatically at your real site. In fact this is a great way to find out if .htaccess files are enabled on your site; create one, put some gibberish in it, and load a page in that folder, wait for the 500 error. if there isn't one, probably they are not enabled.\par
+\par
+If they are, we need a way to safely do live-testing without bringing the whole site to a 500 standstill.\par
+\par
+Fortunately, in much the same way as we used the <Limit> tag above, we can create conditional directives, things which will only come into effect if certain conditions are true. The most useful of these is the "ifModule" condition, which goes something like this..\par
+\par
+    only if PHP is loaded, this will this directive have any effect\par
+    <ifModule mod_php4.c>\par
+     php_value default_charset utf-8\par
+    </ifModule>\par
+\par
+\par
+..which placed in your master .htaccess file, that would set the default character encoding of your entire site to utf-8 (a good idea!), at least, anything output by PHP. If the PHP4 module isn't running on the server, the above .htaccess directive will do exactly nothing; apache just ignores it. As well as proofing us against knocking the server into 500 mode, this also makes our .htaccess directives that wee bit more portable. Of course, if your syntax is messed-up, no amount of if-module-ing is going to prevent a error of some kind, all the more reason to practice this stuff on a local test server.\par
+\par
+ \par
+groovy things to do with .htaccess\par
+So far we've only scratched the surface. aside from authorisation, the humble .htaccess file can be put to all kinds of uses. If you've ever had a look in my public archives you will have noticed that that the directories are fully browsable, just like in the old days before adult web hosts realized how to turn that feature off! a line like this..\par
+\par
+    bring back the directories!\par
+    Options +Indexes +MultiViews +FollowSymlinks\par
+\par
+\par
+will almost certainly turn it back on again. And if you have mod_autoindex.c installed on your server (probably, yes), you can get nice fancy indexing, too..\par
+\par
+    show me those files!\par
+    <IfModule mod_autoindex.c>\par
+     IndexOptions FancyIndexing\par
+    </ifModule>\par
+\par
+\par
+..which, as well as being neater, allows users to click the titles and, for instance, order the listing by date, or filesize, or whatever. It's all for free too, built-in to the server, we're just switching it on. You can control certain parameters too..\par
+\par
+    let's go all the way!\par
+    <IfModule mod_autoindex.c>\par
+     IndexOptions FancyIndexing IconHeight=16 IconWidth=16\par
+    </ifModule>\par
+\par
+\par
+Other parameters you could add include..\par
+\par
+    NameWidth=30\par
+    DescriptionWidth=30\par
+    IconsAreLinks SuppressHTMLPreamble (handy!)\par
+\par
+\par
+I've chucked a copy of my own fancy indexing .htaccess file onsite for you to have some fun with. Just add readme.html and away you go! note: these days I use a single header files for all  the indexes, and only drop in local "readme" files. Check out the example, and my public archives for more details.\par
+\par
+It really is worth scouting around the Apache documentation, often you will find controls for things you imagined were uncontrolable, thereby creating new possibilities, better options for your website. My experience of the magic "LAMP" (Linux-Apache-MySQL-PHP) has been.. "If you can imagine that it can be done, it can be done". Swap "Linux" for any decent operating system, especially Mac OS X.\par
+\par
+Okay, so now we have nice fancy directories, and some of them password protected, if you don't watch out, you're site will get popular, and that means bandwidth..\par
+\par
+ \par
+save bandwidth with .htaccess!\par
+If you pay for your bandwidth, this wee line could save you hard cash..\par
+\par
+    save me hard cash! and help the internet!\par
+    <ifModule mod_php4.c>\par
+     php_value zlib.output_compression 16386\par
+    </ifModule>\par
+\par
+\par
+All it does is enables PHP's built-in transparent zlib compression. This will half your bandwidth usage in one stroke, more than that, in fact. Of course it only works with data being output by the PHP module, but if you design your pages with this in mind, you can use php echo statements, or better yet, php "includes" for your plain html output and just compress everything! Remember, if you run phpsuexec, you'll need to put php directives in a local php.ini file, not .htaccess. See here for more details.\par
+\par
+ \par
+hide files\par
+remember how I mentioned that any file beginning with .ht is invisible? .."almost every web server in the world is configured to ignore them, by default" and that is, of course, because .ht_anything files generally have server directives and passwords and stuff in them, "most servers" will have something like this..\par
+\par
+    Standard setting..\par
+    <Files ~ "^\\.ht">\par
+     Order allow,deny\par
+     Deny from all\par
+     Satisfy All\par
+    </Files>\par
+\par
+\par
+which instructs the server to deny access to any file beginning with .ht, effectively protecting our .htaccess and other files. This version..\par
+\par
+    ignore what you want\par
+    <Files ~ "^.*\\.([Ll][Oo][Gg])">\par
+     Order allow,deny\par
+     Deny from all\par
+     Satisfy All\par
+    </Files>\par
+\par
+\par
+tells the server to deny access to *.log files. You can insert multiple file types into each rule, separating them with a pipe "|", and you can insert multiple blocks into your .htaccess file, too. I find it convenient to put all the files starting with a dot into one, and the files with denied extensions into another, something like this..\par
+\par
+    the whole lot\par
+    # deny all .htaccess, .DS_Store $h\'ee\'86\'e9 and ._* (resource fork) files\par
+    <Files ~ "^\\.([Hh][Tt]|[Dd][Ss]_[Ss]|[_])">\par
+     Order allow,deny\par
+     Deny from all\par
+     Satisfy All\par
+    </Files>\par
+\par
+    # deny access to all .log and .comment files\par
+    <Files ~ "^.*\\.([Ll][Oo][Gg]|[cC][oO][mM][mM][eE][nN][tT])">\par
+     Order allow,deny\par
+     Deny from all\par
+     Satisfy All\par
+    </Files>\par
+\par
+\par
+would cover all ._* resource fork files, .DS_Store files (which the Mac Finder creates all over the place) *.log files, *.comment files and of course, our .ht* files. You can add whatever filetypes you need to protect from direct access. I think it's clear now why the file is called ".htaccess".\par
+ \par
+<FilesMatch>\par
+These days, using <FilesMatch> is preferred over <Files>, mainly because you can use regular expression in the conditions. Very handy. Here's an example (used for my php-generated style sheets)..\par
+\par
+    parse file.css and file.style with the php machine..\par
+    # handler for phpsuexec..\par
+    <FilesMatch "\\.(css|style)$">\par
+     SetHandler application/x-httpd-php\par
+    </FilesMatch>\par
+\par
+\par
+Any files matching the regular expresssion statement, that is anything.css or anything.style will now be handled by php, rather than simply served up by Apache. Any <Files> statements you come across can be advantageously replaced by <FilesMatch> statements. Good to know.\par
+\par
+ \par
+over to you!\par
+That should get you started with .htaccess, quite easy when you know how. If you really want to bend your brain out of shape, follow the link below for part two of the series, where I delve into the arcane mysteries of URL rewriting.\par
+\par
+ \par
+;o)\par
+(or\par
+ \par
+ go to part two..  go to .htaccess part two\par
+ \par
+Before you ask a question..\par
+PLEASE ensure you have at least read the article above. If you want to ask questions about rewriting (mod_rewrite) please do so on THAT page!\par
+cbparser powered comments..\par
+previous comments (six pages)   show all comments\par
+\par
+rape movie - 01.04.06 11:22 pm\par
+\par
+Great idea of your article. We are fully agry with you. Maybe you can talk more for us.\par
+\par
+Mantooth - 03.04.06 6:10 pm\par
+\par
+Hello,\par
+\par
+I'm on a shared server that has disabled the phpfunction "fsockopen". Here's my host's php info http://minidemo.hostultra.com/\par
+\par
+I need that function for some php scripts but my host told me that they absolutely will not open the function for the entire server because of security issues.\par
+\par
+I've heard that there's a way to enable php functions for particular directories using .htaccess\par
+\par
+Is this true? and would you know the lines i would need to add to enable "fsockopen" for the script's directory?\par
+\par
+Thanks\par
+\par
+cor - 04.04.06 5:46 am\par
+\par
+Mantooth, just tell your hosting admins to stop being so lame and install some *real* security measures. Disabling useful php features just because they don't know how to properly secure their box is shameful. No passthru either? pfff.\par
+\par
+Solution: consider a real web host.\par
+\par
+;o)\par
+(or\par
+\par
+Mantooth - 04.04.06 4:19 pm\par
+\par
+    quote\par
+    Solution: consider a real web host.\par
+\par
+\par
+true that. I picked hostultra because the plan was dirt cheap. I've officially learned my lesson.\par
+\par
+Thanks for the advice.\par
+\par
+-Mantooth\par
+\par
+Mihai - 07.04.06 7:35 pm\par
+\par
+Is there a way to include files in htaccess files?\par
+For instance - I have more vhosts pointing to the same folder so I've created custom .htaccess files (.htaccess_site1, .htaccess_site2, etc..). Yet - I want to have some parts of these to be the same without changing every file of over 300 I'll have.\par
+\par
+.htaccess\par
+\{shared content\}\par
+\par
+.htaccess_site1\par
+\{site1-specific content\}\par
+\{shared content\} <- will have to include .htaccess\par
+\par
+.htaccess_site2\par
+\{site2-specific content\}\par
+\{shared content\} <- will have to include .htaccess\par
+\par
+...\par
+\par
+Thanks\par
+\par
+cor - 08.04.06 2:28 pm\par
+\par
+Nah, Mihai, "include" is only available inside your main httpd.conf (or virtual hosts configuaration).\par
+\par
+It sounds like you have access to the vhost configuration, so make your changes there.\par
+\par
+;o)\par
+(or\par
+\par
+Adam - 26.04.06 5:01 pm\par
+\par
+I need to protect sub directories with htaccess. I have a database of users and have all the information to make this work. My only problem is, on the login screen (in the root) they login, but another popup window comes up asking for username and password to access protected directories. What I want to do is when they login using my login page, that information is passed to the htaccess and provided they are a registered user, have automatic access to the protected directories.\par
+\par
+In other words, I want to get rid of the pop up window, and everywhere I look for the code to do this, its the same copy and pasted article from Apache that says there is a way, but no one has any code to prove it.\par
+\par
+\par
+\par
+cor - 30.04.06 1:42 am\par
+\par
+Adam, my first response is; well, it shouldn't do. Once they login, that's it. There's nothing in Apache that would make a second dialog pop up, you must be doing that. So the answer is STOP DOING THAT!\par
+\par
+At any rate, this just sounds like one big mess, why not simply authenticate with php, and use sessions. The code is lean, clean, and transparent to the user. The login can be a regular text input (like the name input in a comment form) so no pop-up at all.\par
+\par
+Basic authentication sucks, anyway, and Internet Explorer won't do it any more unless you hack the registry, if not yet, then soon. Most folk are moving to better solutions, these days.\par
+\par
+But perhaps I misunderstand. If you want to show me this "copy and paste" code that doesn't work, I might have a better idea of what you mean, and make it work.\par
+\par
+l*rz\par
+\par
+;o)\par
+(or\par
+\par
+thedude - 01.05.06 8:47 pm\par
+\par
+I'm attempting to password protect a directory using .htaccess and everything seems to be set up correctly. But the authentication window will only display under three known instances:\par
+1) when accessing that directory's index page (e.g. http://www.mysite.com/directory/)\par
+2) by entering a non-existent page (page 404s after logging in)\par
+3) by accessing a page with an html extension (http://www.mysite.com/directory/page.html).\par
+\par
+Entering the URL for an existing page opens that page without requiring authentication (e.g. http://www.mysite.com/directory/page.php).\par
+\par
+Do you know what might be causing this?\par
+\par
+cor - 02.05.06 12:19 am\par
+\par
+thedude, yes, I'm almost certain it's caused my a server misconfiguration.\par
+\par
+If you show us the configuration, someone might spot the "mis".\par
+\par
+;o)\par
+(or\par
+\par
+alert(document.cookie) - 09.05.06 8:33 am\par
+\par
+<script>alert(document.cookie)</script>\par
+\par
+rickjames - 14.05.06 3:27 pm\par
+\par
+hey im having trouble setting up .htaccess on my site. i've signed up for godaddy (aw man, awesome deal) and to access my site files i'll have to login to godaddy/ highlight hosting servers/click my hosting account ...then click open which loads me to a separate page on hostingmanager.secureserver.net...to which i either access my files via hostingmanager's control panel to FTP client (java based) under which my directory /teepee (member/directory name under hosting manager) is listed under a remote system\par
+\par
+(sometimes i just use smartftp to ftp://ftp.mysite.org to link to my /teepee main directory)\par
+\par
+i've tried the "satisfy any"...thang but that didnt work.\par
+in turn i've come to believe its something to do with that AuthUserFile line...\par
+\par
+with the aforementioned info...my AuthUserFile has been /teepee/.htpasswd OR ftp://ftp.mysite.org/teepee/.htpasswd OR mysite.org/teepee/.htpasswd...i've also did the allow IP string with the IP i've found on the hostingmanager control panel.... someone please help!!!\par
+\par
+cor - 15.05.06 10:38 am\par
+\par
+Yup, rickjames, godaddy is the place for domains!\par
+\par
+However, I know absolutely nothing about their hosting plans, nor their server setup. My first instinct is that it's nothing to do with .htaccess. In every host I've been with, the FTP access is controlled through the hosting panel (or in rare cases, in the shell).\par
+\par
+Check your hosting panel carefully, probably there's an option to enable and/or setup ftp accounts. Do that.\par
+\par
+If it's something else (and asking the godaddy staff would probably get you a swift answer) then let us know.\par
+\par
+l*rz..\par
+\par
+;o)\par
+(or\par
+\par
+BluEfficient - 03.06.06 9:29 am\par
+\par
+The GoDaddy issue stems from it's use of a cgi wrapper. The particular wrapper they use not only causes your issue, but causes MAJOR issues with .htaccess.\par
+\par
+For instance, let's say I have a folder I want to protect, called admin. After fixing the .htaccess and .htpasswd file, I type in:\par
+\par
+http://www.domain.com/admin/\par
+\par
+Now, here's the kicker... If my index page is index.htm OR index.html, I will be prompted for a username/password. If my page is called index.php, the page will be displayed without asking for squat.\par
+\par
+WTF?\par
+\par
+Well, again, it's the cgi wrapper. Since the page has the php extension, it is handled much differently than a plainly coded html page with no parsing.\par
+\par
+Thought someone might be interested to know. And, no, GoDaddy will NOT change this for you and does not have hosting without the cgi wrapper.\par
+\par
+Daniel - 03.06.06 10:29 pm\par
+\par
+My website is http://www.crazyworld.biz.ly,\par
+i want to grant cgi access, to a folder called cgi,\par
+how do i do that?\par
+\par
+elkjy@yahoo.com - 04.06.06 10:36 am\par
+\par
+F\'e9licitations pour votre travail!\par
+\par
+cor - 05.06.06 7:21 am\par
+\par
+Daniel, add..\par
+\par
++ExecCGI\par
+\par
+\par
+;o)\par
+(or\par
+\par
+SongDog - 06.06.06 7:59 am\par
+\par
+I know I've posted here b4 (in last month or so) , we talked about apache, penguins with feathers, mod_rewrite and password protection. For the life of me I cannot find those posts. (have you ever considered a threaded board?)\par
+\par
+Anywho I gots another question on mod_rewrite that maybe you can help me width smiley for ;)\par
+\par
+There is a particular person who has screwed with me 2 much in the past who I would like to send to a particular page on my site when they try to access any of the rest of my site.\par
+\par
+OK in the world of dynamic ips the actual numbers change from time to time, but the constant is that the ip number resolves to xx.bigKableKompany.xyz\par
+\par
+What would I do to send anyone (I understand whats meant by anyone) from xx.bigKableKompany.xyz to send him to http://myDomain.xyz/hiTurdleHead.html?\par
+\par
+cor - 07.06.06 10:12 am\par
+\par
+SongDog, the reason you can't find the posts is because they were on the mod_rewrite page (part two), where this post should probably be!\par
+\par
+This is a tricky one. If hostname lookups are enabled on your server, you can redirect using the remote domain name in your rule (REMOTE_ADDR in the rewritecond). However this is highly unlikely (it's an incredible waste of bandwidth, and disabled by default in Apache).\par
+\par
+So you might be looking at a server-side scripting solution. This would be easy to do in php, for instance.\par
+\par
+If you have a page header (something that's included in all your pages) then you could check there, and redirect as required. If you don't have such an include, it's easy enough to add that on a global basis (and this is why I left this reply on this - part one - page), in your .htaccess..\par
+\par
+php_value auto_prepend_file /full/path/to/a55h01e-checker.php\par
+\par
+Have fun!\par
+\par
+;o)\par
+(or\par
+\par
+justin - 19.06.06 2:39 pm\par
+\par
+I need the directory say protected_doc, protected from access by any means other that of a particular link to it.\par
+or\par
+if you put it in another way, one should be able to access the directory only if he uses this link and not even giving the location in the browser (url bar)\par
+\par
+Is it possible..?\par
+\par
+The posts here were quite useful in understanding (little at least) on the might of .htaccess smiley for ;)\par
+\par
+Thanks in advance ..\par
+\par
+Justin\par
+\par
+cor - 20.06.06 12:12 am\par
+\par
+justin, probably your best bet would be to use regular hot-linking code, except remove the line that allows access with no referrer. While some (a few, very rare) browsers don't send referrer headers (or "referer", if you prefer the usual misspelling). this will cover 99% of your surfers.\par
+\par
+Other then that, a server-side coding solution would likely be best (like a php session). You might also want to consider using cookies, which can be placed in the browser with .htaccess, JavaScript, php, whatever.\par
+\par
+;o)\par
+(or\par
+}
+ 
