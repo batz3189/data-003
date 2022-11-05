@@ -1,0 +1,265 @@
+http://www.dongwm.com/archives/zuixinfangshianzhuangpeizhismokeping/
+smokeping是对IDC网络质量，稳定性等最好的检测工具，
+包括常规的 ping，dig，echoping，curl等，
+可以 监视 www 服务器性能，
+监视 dns 查询性能，
+监视 ssh 性能等。
+选择smokeping我觉得有以下原因： 
+1，最佳的画图功能，延迟和丢包用颜色和阴影表示很直观。 
+2，免费和开源，作者是MRTG和RRDtool作者。 
+3，支持主从的分布式模式。
+4，可以自定义报警功能
+
+
+一、介绍
+smokeping是rrdtool的作者Tobi Oetiker的作品，所以它在图形显示方面有很大优势，也是一个很有特点的opensource工具：多种探测方式，包括fping、echoping、dig、curl等；
+易用可扩展的插件；
+master/slave的工作方式，可以在多个节点收集同一个监测点的数据；很有特色的alert设置，不只是简单的设置一个阀值；
+
+
+
+二、安装包
+在装好LAMP与Perl基础上，再安装以下软件 
+Smokeping need few perl module and other package to run.
+1. RRDtools   Download here : http://oss.oetiker.ch/rrdtool/
+2. FPing      Download here : http://www.fping.com/
+3. EchoPing   Download here : http://echoping.sourceforge.net/
+4. cURL       Download here : http://curl.haxx.se/
+5. Dig        Download here: http://www.isc.org/sw/bind/
+6. SSH        Download here : http://www.openssh.org/
+
+Various Perl Module Download here : http://www.cpan.org/
+1. libwww-perl
+2. Socket6 0.11-1
+3. Net::Telnet
+4. Net::DNS
+5. Net::LDAP
+6. IO::Socket::SSL
+7. Authen::Radius
+
+
+
+三、安装
+由于所需安装的依赖较多，因此建议采取yum的安装方法
+1、更新yum源
+http://pkgs.repoforge.org/rpmforge-release/ 此路径下存放更新的yum源的rpm包，下载对应的版本
+rpmforge-release-0.5.3-1.el3.rf.i386.rpm   20-Mar-2013 16:59   11K  RHEL3 and CentOS-3 x86 32bit
+rpmforge-release-0.5.3-1.el3.rf.x86_64.rpm 20-Mar-2013 16:59   11K  RHEL3 and CentOS-3 x86 64bit
+rpmforge-release-0.5.3-1.el4.rf.i386.rpm   20-Mar-2013 16:59   11K  RHEL4 and CentOS-4 x86 32bit
+rpmforge-release-0.5.3-1.el4.rf.x86_64.rpm 20-Mar-2013 16:59   11K  RHEL4 and CentOS-4 x86 64bit
+rpmforge-release-0.5.3-1.el5.rf.i386.rpm   20-Mar-2013 16:59   12K  RHEL5 and CentOS-5 x86 32bit
+rpmforge-release-0.5.3-1.el5.rf.x86_64.rpm 20-Mar-2013 16:59   12K  RHEL5 and CentOS-5 x86 64bit
+rpmforge-release-0.5.3-1.el6.rf.i686.rpm   20-Mar-2013 16:59   12K  RHEL6 and CentOS-6 x86 32bit
+rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm 20-Mar-2013 16:59   12K  RHEL6 and CentOS-6 x86 64bit
+rpmforge-release-0.5.3-1.rf.src.rpm        20-Mar-2013 16:59  8.5K  Distribution independent source
+
+wget http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.3-1.el6.rf.i686.rpm
+rpm -Uvh rpmforge-release-0.5.3-1.el6.rf.i686.rpm
+
+2、yum安装依赖
+yum -y install perl perl-Net-Telnet perl-Net-DNS perl-LDAP perl-libwww-perl perl-RadiusPerl perl-IO-Socket-SSL perl-Socket6 perl-CGI-SpeedyCGI perl-FCGI perl-CGI-SpeedCGI perl-Time-HiRes perl-ExtUtils-MakeMaker perl-RRD-Simple rrdtool rrdtool-perl curl fping echoping  gcc make  wget libxml2-devel libpng-devel glib pango pango-devel freetype freetype-devel fontconfig cairo cairo-devel libart_lgpl libart_lgpl-devel mod_fastcgi
+
+在yum安装过程中发现缺乏如下两个包，需要手动编译
+No package perl-CGI-SpeedCGI available.
+No package perl-ExtUtils-MakeMaker available.
+
+3、执行ad_autoinst.amp.node.tgz，安装lamp环境，主要依赖apache跑cgi
+yum install httpd -y
+
+4、rpm安装perl-CGI-SpeedCGI与perl-ExtUtils-MakeMaker
+wget http://pkgs.repoforge.org/perl-CGI-SpeedyCGI/perl-CGI-SpeedyCGI-2.22-1.2.el5.rf.x86_64.rpm
+wget ftp://ftp.pbone.net/mirror/ftp5.gwdg.de/pub/opensuse/repositories/home:/dibo2010:/buildservice/CentOS_CentOS-5/x86_64/perl-ExtUtils-MakeMaker-6.56-10.3.x86_64.rpm
+
+5、安装smokeping
+注意：不建议使用smokeping-2.6.9，在configure会出错，且报错不明显
+
+wget http://oss.oetiker.ch/smokeping/pub/smokeping-2.6.8.tar.gz
+tar zxvf smokeping-2.6.8.tar.gz
+cd smokeping-2.6.8
+./configure --prefix=/usr/local/smokeping
+
+在configure之后输出如下
+** Aborting Configure ******************************
+
+  If you know where perl can find the missing modules, set
+  the PERL5LIB environment variable accordingly.
+
+  FIRST though, make sure that 'perl' starts the perl
+  binary you want to use for SmokePing.
+
+  Now you can install local copies of the missing modules
+  by running
+
+    ./setup/build-perl-modules.sh /usr/local/smokeping/thirdparty
+
+  The RRDs perl module is part of RRDtool. Either use the rrdtool
+  package provided by your OS or install rrdtool from source.
+  If you install from source, the RRDs module is located
+  PREFIX/lib/perl
+出现问题是因为需要安装perl的模块，所以运行下面内容即可
+./setup/build-perl-modules.sh /usr/local/smokeping/thirdparty
+如还是报以上提示：
+1，检查软件包是否安装
+2，清空该目录下的文件/usr/local/smokeping/thirdparty，重新执行./setup/build-perl-modules.sh /usr/local/smokeping/thirdparty
+
+重新./configure --prefix=/usr/local/smokeping，正常会返回如下，建议采用/usr/bin/gmake install执行安装
+** Ready to install Smokeping ******************************
+
+  Settings:
+
+    PERL5LIB = not set
+    PERL = /usr/bin/perl
+
+  The Smokeping Makefiles use GNU make functionality.
+  Continue installation with
+
+    /usr/bin/gmake install
+至此smokeping安装完成。
+[root@snunc local]# cd smokeping/
+[root@snunc smokeping]# ll
+total 36
+drwxr-xr-x 2 root   root   4096 Oct 17 15:18 bin
+drwxr-xr-x 3 root   root   4096 Oct 17 15:19 etc
+drwxr-xr-x 3 root   root   4096 Oct 17 15:19 htdocs
+drwxr-xr-x 3 root   root   4096 Oct 17 15:19 lib
+drwxr-xr-x 3 root   root   4096 Oct 17 15:18 share
+drwxr-xr-x 6 root   root   4096 Oct 17 15:16 thirdparty
+
+
+
+四、配置smokeping
+1.创建cache、data、var目录，原因在于smokeping的etc/config声明
+imgcache = /usr/local/smokeping/cache
+imgurl   = cache
+datadir  = /usr/local/smokeping/data
+piddir  = /usr/local/smokeping/var
+
+cd /usr/local/smokeping
+mkdir -p cache data var
+
+2.在创建日志
+touch /usr/local/smokeping/smokeping.log
+
+3.授权
+chown daemon:daemon cache data var
+chown daemon:daemon /usr/local/smokeping/smokeping.log
+chmod 777 -R cache/ data/
+
+4.修改配置文件
+cd /usr/local/smokeping/htdocs/
+mv smokeping.fcgi.dist smokeping.fcgi
+cd /usr/local/smokeping/etc
+mv config.dist config
+vim config
+cgiurl   = http://some.url/smokeping.cgi
+主要修改这行：cgiurl   = http://219.138.40.43:8001/smokeping.cgi
+
+然后修改step，从300改为60，这是检测的时间。
+*** Database ***
+step     = 300
+
+5.配置完成之后修改密码文件权限，此文件用于跟slave验证
+chmod 600 /usr/local/smokeping/etc/smokeping_secrets.dist
+
+6.修改apache的配置
+vim /etc/httpd/conf/httpd.conf
+添加如下
+Alias /cache "/usr/local/smokeping/cache/"
+Alias /cropper "/usr/local/smokeping/htdocs/cropper/"
+Alias /smokeping "/usr/local/smokeping/htdocs/smokeping.fcgi"
+<Directory "/usr/local/smokeping">
+AllowOverride None
+Options All
+AddHandler cgi-script .fcgi .cgi
+Order allow,deny
+Allow from all
+DirectoryIndex smokeping.fcgi
+</Directory>
+
+ServerName 219.138.40.43:8001
+Listen 8001
+
+
+7.设置开机启动
+echo "/usr/local/smokeping/bin/smokeping --logfile=/usr/local/smokeping/smokeping.log 2>&1 &" >> /etc/rc.local
+
+8.启动http与smokeping
+/etc/init.d/httpd start
+/usr/local/smokeping/bin/smokeping --logfile=/usr/local/smokeping/smokeping.log 2>&1 &
+然后访问你在config里设置的cgiurl= http://some.url/smokeping
+注意如果出现500错误就是因为你没有关闭selinux的问题，关闭了就能正常打开。
+剩下就该你自己修改你要监控的内容了
+
+/usr/local/smokeping/bin/smokeping --check 配置文件检查
+/usr/local/smokeping/bin/smokeping --debug 启动调试
+/usr/local/smokeping/bin/smokeping --start 启动
+/usr/local/smokeping/bin/smokeping --restart 重启
+
+注意apache编译过程中不能去除cgi，且http.conf中需声明LoadModule cgi_module        modules/mod_cgi.so
+
+如果各位就这样放到网上的话，是十分的不安全，所以需要加入访问控制。
+
+9.修改httpd.conf里的内容
+<Directory "/usr/local/smokeping">
+AllowOverride None
+Options All
+AddHandler cgi-script .fcgi .cgi
+AllowOverride AuthConfig
+Order allow,deny
+Allow from all
+AuthName "Smokeping"
+AuthType Basic
+AuthUserFile /usr/local/smokeping/htdocs/htpasswd
+Require valid-user
+DirectoryIndex smokeping.fcgi
+</Directory>
+把之前修改的httpd.conf里的这一段直接覆盖就行
+然后进入cd /usr/local/smokeping/htdocs目录
+设置登录账户与密码	htpasswd -c /usr/local/smokeping/htdocs/htpasswd admin
+这个是设置登录账户为admin，密码在后面输入
+然后重启httpd就可以实现密码验证登录
+
+需要注意，一定要同步好时间，可以使用cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime或者ntpdate 210.72.145.44。
+
+10.如果需要在网页里展示中文，修改/usr/local/smokeping/etc的config文件
+*** Presentation ***
+charset = utf-8 //注：在这里添加
+然后在menu与titile里修改中文，重启即可
+有一个要注意的地方就是，你输入的中文必须在utf-8的字符编码下输入的中文字符，不然会出现乱码。
+
+debian上可以先apt-cache search wqy(文泉译), centos可以yum search wqy试试。
+
+
+11.关于smokeping的master与slave配置
+slave主机会自己去检查监测点的情况（loss and rtt），并将数值提交给master主机（通过smokeping.cgi)。
+值得注意的是，slave并不需要config文件，每次slave提交完数据以后，会询问master它自己的配置文件是否有修改，如果有修改的话slave会进行更新。
+
+配置在master的config里修改
+*** Slaves ***
+secrets=/usr/local/smokeping/etc/smokeping_secrets.dist #密码文件
+
++slave1#名称
+display_name=slave1
+要注意的是"slave1"这个名字需要设置为slave主机的hostname，并且写在"slavesecrets.con"文件里面，如果不想用slave主机的hostname，那么在slave主机启动smokeping服务的时候需要使用"--slave-name"来指定自己的名字。
+
+在section *** Targets *** 中指定那个host需要使用哪个slave帮忙进行检测。下层会继承上层的配置，如果下层不像继承的话，可以配置"slaves ="来避免使用slave。具体安装与配置不介绍。
+
+master/slave模式中，master和slave的图片都会显示在同一个页面中，如果不希望显示master的图片，可以使用nomasterpoll=yes参数。
+
+·另外要注意的一点是，master上面启动"smokeping"进程和apache进程的用户必须要一致。因为rrd文件是由"smokeping"进程创建的，而数据的update却是由"smokeping.cgi"进行的，也就是apache用户。
+如果不一致的话会出现rrd文件无法被更新的情况，这个情况即使在slave主机上面进行debug也是看不出来的。
+具体的现象是在页面上面看到master的图像出现数据，但是slave的图像一直是空白的，数据显示是"nan"。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
