@@ -1,0 +1,184 @@
+#!/bin/bash
+#  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Title: Tweaks backup
+#  Author: Nanmu
+#  Contact: dizangqi@icloud.com
+#  Copyright: Nanmu, 2013-2014, All Rights Reserved
+#  The Official Twitter Page: http://www.ujs.edu.cn/, http://cs.ujs.edu.cn/, http://pangu.io
+#  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+#  Thanks to iLEX RAT, PanguTeam, brc0703.
+
+#  Made by Nanmu, 2014-08-25-20:19
+
+CONSCR="/var/lib/dpkg/info"
+
+deb_list(){
+  
+	dpkg --get-selections | grep -v deinstall | grep -v gsc | sed -e 's/[\t]hold//'  | sed -e 's/[\t]install//' > install.brc
+
+	sed -i "/apr-lib/d" install.brc
+	sed -i "/apt7-key/d" install.brc
+	sed -i "/apt7-lib/d" install.brc
+	sed -i "/base/d" install.brc
+	sed -i "/bash/d" install.brc
+	sed -i "/bzip2/d" install.brc
+	sed -i "/com.chronic-dev.greenpois0n.rocky-racoon/d" install.brc
+	sed -i "/coreutils-bin/d" install.brc
+	sed -i "/cy+cpu.arm/d" install.brc
+	sed -i "/cy+kernel.darwin/d" install.brc
+	sed -i "/cy+lib.corefoundation/d" install.brc
+	sed -i "/cy+model.iphone/d" install.brc
+	sed -i "/cy+model.ipod/d" install.brc
+	sed -i "/cy+model.ipad/d" install.brc
+	sed -i "/cy+os.ios/d" install.brc
+	sed -i "/darwintools/d" install.brc
+	sed -i "/debianutils/d" install.brc
+	sed -i "/diffutils/d" install.brc
+	sed -i "/dpkg/d" install.brc
+	sed -i "/findutils/d" install.brc
+	sed -i "/firmware/d" install.brc
+	sed -i "/firmware-sbin/d" install.brc
+	sed -i "/gnupg/d" install.brc
+	sed -i "/grep/d" install.brc
+	sed -i "/gzip/d" install.brc
+	sed -i "/lzma/d" install.brc
+	sed -i "/ncurses/d" install.brc
+	sed -i "/org.thebigboss.repo.icons/d" install.brc
+	sed -i "/pam/d" install.brc
+	sed -i "/pam-modules/d" install.brc
+	sed -i "/pcre/d" install.brc
+	sed -i "/profile.d/d" install.brc
+	sed -i "/readline/d" install.brc
+	sed -i "/sed/d" install.brc
+	sed -i "/shell-cmds/d" install.brc
+	sed -i "/system-cmds/d" install.brc
+	sed -i "/tar/d" install.brc
+	sed -i "/uikittools/d" install.brc
+
+	sed -i "/baiduinputmethod.178/d" install.brc
+	sed -i "/com.teiron.pphelperns/d" install.brc
+	sed -i "/io.pangu.axe7/d" install.brc
+	sed -i "/backtrack-bootsplash/d" install.brc
+
+}
+
+
+# start make directories,  make list of package objects
+# make list of package objects, make the folder with all files
+
+cd /
+if [[ ! -d /root ]]; then
+	mkdir -p root
+fi
+
+cd /root 
+mkdir media  &> /dev/null
+cd /root/media 
+#mkdir /root/media/tmp  &> /dev/null
+mkdir /root/media/deb  &> /dev/null
+
+cd /root/media/deb  &> /dev/null
+
+if [ "$1" == "--help" ]; then
+	echo "redeb [ search ] (will find any package matching [search])"
+fi
+
+rm *.brc &> /dev/null
+
+j=0;
+
+#list deb package
+deb_list;
+if [[ ! -z $1 ]]; then
+	cat install.brc | grep $1 > del.brc
+else  
+	cat install.brc > del.brc
+fi
+
+for i in `cat del.brc`; do
+   echo $((j+=1))': '$i;
+done;
+
+if [[ $j = 0 ]]; then
+  echo the package is not installed!
+  exit 0;
+fi
+
+echo -n "Please Enter the num: "
+read num;
+echo ""
+
+if [[ $num > 0 && $num -le $j ]]; then
+
+	j=0;
+
+	for i in `cat del.brc `; do
+		let j+=1
+		if [[ $j -eq $num ]]; then
+	   
+			echo "Waiting for backup... "
+			line=$(echo $i | cut -d: -f2)
+			echo $line
+			echo "Preparing $line ..." 
+			mkdir -p $line
+			cd $line
+			dpkg -L $line > getFileSystem.txt
+	
+	
+			# Copy file of tweaks	
+			while read io; do
+				if [ -d "$io" ]; then
+					mkdir ./"$io" 2>>/dev/null
+				else
+				if [ -f "$io" ]; then
+					cp -a "$io" ./"$io"
+				fi
+				fi
+			done < getFileSystem.txt
+			rm getFileSystem.txt
+	
+	
+			# Copy control message of tweaks
+			mkdir DEBIAN
+			cd DEBIAN
+			dpkg -p $line > control
+			SETUP=$(find $CONSCR -name $line* | grep -v list$)
+			if [ -n "$SETUP" ]; then
+				for SCRIPT in $(echo $SETUP); do	
+					NEW=$(echo "$SCRIPT" | tr '.' ' ' | awk '{ print $NF }')
+					cp -a $SCRIPT ./$NEW
+				done
+			fi
+			
+			chmod 0775 ./*
+			cd /root/media/deb
+	
+			#Packed DEB
+			echo "Packing DEB for $line ..."
+		
+			dpkg -b $line ./ &> /dev/null
+
+	
+			# erasing folders
+			echo
+			echo "Deleteing the temporary folder..."
+			rm -rf $line
+			rm *.brc	
+	
+			#Successful Message
+			echo "Backup is finished!!! "
+			sleep 1s
+			echo
+		fi
+	done
+
+else 
+	echo "Not correct number.";
+	echo  Goodbye!!!
+	echo ""
+fi
+rm .brc &> /dev/null
+exit 0
+
+
