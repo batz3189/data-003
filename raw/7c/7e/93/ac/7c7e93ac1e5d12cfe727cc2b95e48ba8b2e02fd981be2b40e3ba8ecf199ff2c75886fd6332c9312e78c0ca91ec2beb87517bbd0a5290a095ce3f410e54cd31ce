@@ -1,0 +1,11 @@
+《共享软件加密算法库》专业版PB6.5调用示例
+
+readme.txt 	--本文件
+reg.pbl  	--pb6.5的原码
+reg.exe  	--可执行文件
+reg.sra		--pb交换文件
+w_reg.srw	--pb交换文件(可直接导入pb其它版本)
+pbvm60.dll  	--pb6.5的动态库(运行reg.exe时需要)
+
+
+
