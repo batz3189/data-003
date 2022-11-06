@@ -1,0 +1,81 @@
+Practical Analog Design Techniques
+
+SECTION 1
+SINGLE-SUPPLY AMPLIFIERS
+Rail-to-Rail Input Stages
+Rail-to-Rail Output Stages
+Single-Supply Instrumentation Amplifiers
+
+SECTION 2
+HIGH SPEED OP AMPS
+Driving Capacitive Loads
+Cable Driving
+Single-Supply Considerations
+Application Circuits
+
+SECTION 3
+HIGH RESOLUTION SIGNAL CONDITIONING ADCs
+Sigma-Delta ADCs
+High Resolution, Low Frequency Measurement ADCs
+
+SECTION 4
+HIGH SPEED SAMPLING ADCs
+ADC Dynamic Considerations
+Selecting the Drive Amplifier Based on
+ADC Dynamic Performance
+Driving Flash Converters
+Driving the AD9050 Single-Supply ADC
+Driving ADCs with Switched Capacitor Inputs
+Gain Setting and Level Shifting
+External Reference Voltage Generation
+ADC Input Protection and Clamping
+Applications for Clamping Amplifiers
+Noise Considerations in High Speed Sampling ADC Applications
+
+SECTION 5
+UNDERSAMPLING APPLICATIONS
+Fundamentals of Undersampling
+Increasing ADC SFDR and ENOB using External SHAs
+Use of Dither Signals to Increase ADC Dynamic Range
+Effect of ADC Linearity and Resolution on SFDR and
+Noise in Digital Spectral Analysis Applications
+Future Trends in Undersampling ADCs
+
+SECTION 6
+MULTICHANNEL APPLICATIONS
+Data Acquisition System Considerations
+Multiplexing
+Filtering Considerations for Data Acquisition Systems
+SHA and ADC Settling Time Requirements in Multiplexed Applications
+Complete Data Acquisition Systems on a Chip
+Multiplexing into Sigma-Delta ADCs
+Simultaneous Sampling Systems
+Data Distribution Systems using Multiple DACs
+
+SECTION 7
+OVERVOLTAGE EFFECTS ON ANALOG INTEGRATED CIRCUITS
+Amplifier Input Stage Overvoltage
+Amplifier Output Voltage Phase Reversal
+Understanding and Protecting Integrated
+Circuits from Electrostatic Discharge (ESD)
+
+SECTION 8
+DISTORTION MEASUREMENTS
+High Speed Op Amp Distortion
+High Frequency Two-Tone Generation
+Using Spectrum Analyzers in High Frequency
+Low Distortion Measurements
+Measuring ADC Distortion using FFTs
+FFT Testing
+Troubleshooting the FFT Output
+Analyzing the FFT Output
+
+SECTION 9
+HARDWARE DESIGN TECHNIQUES
+Prototyping Analog Circuits
+Evaluation Boards
+Noise Reduction and Filtering for
+Switching Power Supplies
+Low Dropout References and Regulators
+EMI/RFI Considerations
+Sensors and Cable Shielding
