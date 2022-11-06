@@ -1,0 +1,1658 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="./Readme_files/filelist.xml">
+<link rel=Edit-Time-Data href="./Readme_files/editdata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>CMOS IC Layout Readme</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Mary-Kate Bourn</o:Author>
+  <o:LastAuthor>Mary-Kate Bourn</o:LastAuthor>
+  <o:Revision>23</o:Revision>
+  <o:TotalTime>52</o:TotalTime>
+  <o:Created>1999-10-20T15:35:00Z</o:Created>
+  <o:LastSaved>1999-10-21T19:01:00Z</o:LastSaved>
+  <o:Pages>6</o:Pages>
+  <o:Words>2858</o:Words>
+  <o:Characters>16295</o:Characters>
+  <o:Company>Butterworth-Heinemann</o:Company>
+  <o:Lines>135</o:Lines>
+  <o:Paragraphs>32</o:Paragraphs>
+  <o:CharactersWithSpaces>20011</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:"MS Mincho";
+	panose-1:0 0 0 0 0 0 0 0 0 0;
+	mso-font-alt:"\FF2D\FF33 \660E\671D";
+	mso-font-charset:128;
+	mso-generic-font-family:roman;
+	mso-font-format:other;
+	mso-font-pitch:fixed;
+	mso-font-signature:1 134676480 16 0 131072 0;}
+@font-face
+	{font-family:"Futura XBlk BT";
+	panose-1:2 11 9 3 2 2 4 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:135 0 0 0 27 0;}
+@font-face
+	{font-family:"\@MS Mincho";
+	panose-1:0 0 0 0 0 0 0 0 0 0;
+	mso-font-charset:128;
+	mso-generic-font-family:roman;
+	mso-font-format:other;
+	mso-font-pitch:fixed;
+	mso-font-signature:1 134676480 16 0 131072 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+h1
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:12.0pt;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:1;
+	font-size:16.0pt;
+	font-family:Arial;
+	color:#FFFFCC;}
+h2
+	{mso-style-next:Normal;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:2.0pt;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:2;
+	font-size:10.0pt;
+	font-family:Arial;}
+h3
+	{mso-style-next:Normal;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:2.0pt;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:3;
+	font-size:10.0pt;
+	font-family:"Times New Roman";}
+p.MsoListBullet, li.MsoListBullet, div.MsoListBullet
+	{mso-style-update:auto;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.25in;
+	margin-bottom:.0001pt;
+	text-indent:-.25in;
+	mso-pagination:widow-orphan;
+	mso-list:l0 level1 lfo3;
+	tab-stops:list .25in;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.MsoBodyText, li.MsoBodyText, div.MsoBodyText
+	{margin-top:5.0pt;
+	margin-right:0in;
+	margin-bottom:5.0pt;
+	margin-left:0in;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	color:#FFFFCC;
+	font-weight:bold;}
+p.MsoBodyText2, li.MsoBodyText2, div.MsoBodyText2
+	{margin:0in;
+	margin-bottom:.0001pt;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	font-size:18.0pt;
+	font-family:"Futura XBlk BT";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:#993366;}
+a:link, span.MsoHyperlink
+	{mso-ansi-font-size:10.0pt;
+	mso-ascii-font-family:Arial;
+	mso-hansi-font-family:Arial;
+	color:aqua;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:lime;
+	text-decoration:underline;
+	text-underline:single;}
+p.MsoPlainText, li.MsoPlainText, div.MsoPlainText
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";}
+span.EmailStyle21
+	{mso-style-type:personal;
+	mso-ansi-font-size:10.0pt;
+	mso-ascii-font-family:Arial;
+	mso-hansi-font-family:Arial;
+	mso-bidi-font-family:Arial;
+	color:windowtext;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+@list l0
+	{mso-list-id:-119;
+	mso-list-type:simple;
+	mso-list-template-ids:-1265989008;}
+@list l0:level1
+	{mso-level-number-format:bullet;
+	mso-level-style-link:"List Bullet";
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.25in;
+	mso-level-number-position:left;
+	margin-left:.25in;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l1
+	{mso-list-id:749277087;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-66564384 67698689 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l1:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;}
+ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+<!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="1037">
+  <o:colormru v:ext="edit" colors="#ffc"/>
+  <o:colormenu v:ext="edit" strokecolor="#ffc"/>
+ </o:shapedefaults></xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+ </o:shapelayout></xml><![endif]-->
+</head>
+
+<body bgcolor="#990033" background="Readme_files\image001.jpg" lang=EN-US
+link=aqua vlink=lime style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoBodyText align=center style='text-align:center;line-height:150%'><!--[if gte vml 1]><v:shapetype
+ id="_x0000_t202" coordsize="21600,21600" o:spt="202" path="m0,0l0,21600,21600,21600,21600,0xe">
+ <v:stroke joinstyle="miter"/>
+ <v:path gradientshapeok="t" o:connecttype="rect"/>
+</v:shapetype><v:shape id="_x0000_s1032" type="#_x0000_t202" style='position:absolute;
+ left:0;text-align:left;margin-left:593.3pt;margin-top:0;width:94.5pt;height:510pt;
+ z-index:3;mso-position-horizontal:right;mso-position-vertical:top;
+ mso-position-vertical-relative:line' o:allowoverlap="f" filled="f"
+ fillcolor="#936" strokecolor="#ffc">
+ <v:textbox style='mso-next-textbox:#_x0000_s1032'>
+  <![if !mso]>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td><![endif]>
+    <div>
+    <p class=MsoBodyText2><span style='color:#FFFFCC'>Color Figures</span><span
+    style='font-size:10.0pt;color:#FFFFCC'><o:p></o:p></span></p>
+    <p class=MsoNormal align=center style='text-align:center'><b><span
+    style='font-family:Arial;color:aqua'><a href="Art\Figure_2-7.gif"
+    title="Click to view.">Figure 2.7</a></span></b><span style='font-family:
+    Arial;color:aqua'><o:p></o:p></span></p>
+    <p class=MsoNormal align=center style='text-align:center'><b><span
+    style='font-family:Arial;color:aqua'><a href="Art\Figure_2-10.gif"
+    title="Click to view.">Figure 2.10</a></span></b><span style='font-family:
+    Arial;color:aqua'><o:p></o:p></span></p>
+    <p class=MsoNormal align=center style='text-align:center'><b><span
+    style='font-family:Arial;color:aqua'><a href="Art\Figure_2-12.gif"
+    title="Click to view.">Figure 2.12</a></span></b><span style='font-family:
+    Arial;color:aqua'><o:p></o:p></span></p>
+    <p class=MsoNormal align=center style='text-align:center'><b><span
+    style='font-family:Arial;color:aqua'><a href="Art\Figure_3-2.gif"
+    title="Click to view.">Figure 3.2</a></span></b><span style='font-family:
+    Arial;color:aqua'><o:p></o:p></span></p>
+    <p class=MsoNormal align=center style='text-align:center'><b><span
+    style='font-family:Arial;color:aqua'><a href="Art\Figure_3-3.gif"
+    title="Click to view.">Figure 3.3</a></span></b><span style='font-family:
+    Arial;color:aqua'><o:p></o:p></span></p>
+    <p class=MsoNormal align=center style='text-align:center'><b><span
+    style='font-family:Arial;color:aqua'><a href="Art\Figure_3-4.gif"
+    title="Click to view.">Figure 3.4</a></span></b><span style='font-family:
+    Arial;color:aqua'><o:p></o:p></span></p>
+    <p class=MsoNormal align=center style='text-align:center'><b><span
+    style='font-family:Arial;color:aqua'><a href="Art\Figure_3-5.gif"
+    title="Click to view.">Figure 3.5</a></span></b><span style='font-family:
+    Arial;color:aqua'><o:p></o:p></span></p>
+    <p class=MsoNormal align=center style='text-align:center'><b><span
+    style='font-family:Arial;color:aqua'><a href="Art\Figure_3-6.gif"
+    title="Click to view.">Figure 3.6</a></span></b><span style='font-family:
+    Arial;color:aqua'><o:p></o:p></span></p>
+    <p class=MsoNormal align=center style='text-align:center'><b><span
+    style='font-family:Arial;color:aqua'><a href="Art\Figure_3-8.gif"
+    title="Click to view.">Figure 3.8</a></span></b><span style='font-family:
+    Arial;color:aqua'><o:p></o:p></span></p>
+    <p class=MsoNormal align=center style='text-align:center'><b><span
+    style='font-family:Arial;color:aqua'><a href="Art\Figure_3-9.gif"
+    title="Click to view.">Figure 3.9</a></span></b><span style='font-family:
+    Arial;color:aqua'><o:p></o:p></span></p>
+    <p class=MsoNormal align=center style='text-align:center'><b><span
+    style='font-family:Arial;color:aqua'><a href="Art/Figure_3-10.gif"
+    title="Click to view.">Figure 3.10</a></span></b><span style='font-family:
+    Arial;color:aqua'><o:p></o:p></span></p>
+    <p class=MsoNormal align=center style='text-align:center'><b><span
+    style='font-family:Arial;color:aqua'><a href="Art\Figure_3-11.gif"
+    title="Click to view.">Figure 3.11</a></span></b><span style='font-family:
+    Arial;color:aqua'><o:p></o:p></span></p>
+    <p class=MsoNormal align=center style='text-align:center'><b><span
+    style='font-family:Arial;color:aqua'><a href="Art\Figure_3-12.gif"
+    title="Click to view.">Figure 3.12</a></span></b><span style='font-family:
+    Arial;color:aqua'><o:p></o:p></span></p>
+    <p class=MsoNormal align=center style='text-align:center'><b><span
+    style='font-family:Arial;color:aqua'><a href="Art\Figure_3-15.gif"
+    title="Click to view.">Figure 3.15</a></span></b><span style='font-family:
+    Arial;color:aqua'><o:p></o:p></span></p>
+    <p class=MsoNormal align=center style='text-align:center'><b><span
+    style='font-family:Arial;color:aqua'><a href="Art\Figure_3-16.gif"
+    title="Click to view.">Figure 3.16</a></span></b><span style='font-family:
+    Arial;color:aqua'><o:p></o:p></span></p>
+    <p class=MsoNormal align=center style='text-align:center'><b
+    style='mso-bidi-font-weight:normal'><span style='font-family:Arial;
+    color:aqua'><a href="Art\Figure_3-17.gif" title="Click to view.">Figure
+    3.17</a></span></b><span class=MsoHyperlink><span style='font-family:Arial'><o:p></o:p></span></span></p>
+    <p class=MsoNormal align=center style='text-align:center'><b><span
+    style='font-family:Arial;color:aqua'><a href="Art/Figure_3-18.gif"
+    title="Click to view.">Figure 3.18</a></span></b><span style='font-family:
+    Arial;color:aqua'><o:p></o:p></span></p>
+    <p class=MsoNormal align=center style='text-align:center'><b><span
+    style='font-family:Arial;color:aqua'><a href="Art\Figure_3-19.gif"
+    title="Click to view.">Figure 3.19</a></span></b><span style='font-family:
+    Arial;color:aqua'><o:p></o:p></span></p>
+    <p class=MsoNormal align=center style='text-align:center'><b><span
+    style='font-family:Arial;color:aqua'><a href="Art\Figure_5-2.gif"
+    title="Click to view.">Figure 5.2</a></span></b><span style='font-family:
+    Arial;color:aqua'><o:p></o:p></span></p>
+    <p class=MsoNormal align=center style='text-align:center'><b><span
+    style='font-family:Arial;color:aqua'><a href="Art\Figure_5-2A.gif">Figure
+    5.2A</a></span></b><span style='font-family:Arial;color:aqua'><o:p></o:p></span></p>
+    <p class=MsoNormal align=center style='text-align:center'><b><span
+    style='font-family:Arial;color:aqua'><a href="Art\Figure_5-6.gif"
+    title="Click to view.">Figure 5.6</a></span></b><span style='font-family:
+    Arial;color:aqua'><o:p></o:p></span></p>
+    <p class=MsoNormal align=center style='text-align:center'><b><span
+    style='font-family:Arial;color:aqua'><a href="Art\Figure_5-12.gif"
+    title="Click to view.">Figure 5.12</a></span></b><span style='font-family:
+    Arial;color:aqua'><o:p></o:p></span></p>
+    <p class=MsoNormal align=center style='text-align:center'><b><span
+    style='font-family:Arial;color:aqua'><a href="Art\Figure_5-13.gif"
+    title="Click to view.">Figure 5.13</a></span></b><span style='font-family:
+    Arial;color:aqua'><o:p></o:p></span></p>
+    <p class=MsoNormal align=center style='text-align:center'><b><span
+    style='font-family:Arial;color:aqua'><a href="Art\Figure_5-14.gif"
+    title="Click to view.">Figure 5.14</a></span></b><span style='font-family:
+    Arial;color:aqua'><o:p></o:p></span></p>
+    <p class=MsoNormal align=center style='text-align:center'><b><span
+    style='font-family:Arial;color:aqua'><a href="Art\Figure_5-15.gif"
+    title="Click to view.">Figure 5.15</a></span></b><span style='font-family:
+    Arial;color:aqua'><o:p></o:p></span></p>
+    <p class=MsoNormal align=center style='text-align:center'><b><span
+    style='font-family:Arial;color:aqua'><a href="Art\Figure_5-26.gif"
+    title="Click to view.">Figure 5.26</a></span></b><span style='font-family:
+    Arial;color:aqua'><o:p></o:p></span></p>
+    <p class=MsoNormal align=center style='text-align:center'><b><span
+    style='font-family:Arial;color:aqua'><a href="Art\Figure_5-28.gif"
+    title="Click to view.">Figure 5.28</a></span></b><span style='font-family:
+    Arial;color:aqua'><o:p></o:p></span></p>
+    <p class=MsoNormal align=center style='text-align:center'><b><span
+    style='font-family:Arial;color:aqua'><a href="Art\Figure_5-29.gif"
+    title="Click to view.">Figure 5.29</a></span></b><span style='font-family:
+    Arial;color:aqua'><o:p></o:p></span></p>
+    <p class=MsoNormal align=center style='text-align:center'><b><span
+    style='font-family:Arial;color:aqua'><a href="Art\Figure_7-3.gif"
+    title="Click to view.">Figure 7.3</a></span></b><span style='font-family:
+    Arial;color:aqua'><o:p></o:p></span></p>
+    <p class=MsoNormal align=center style='text-align:center'><b><span
+    style='font-family:Arial;color:aqua'><a href="Art/Figure_7-8.gif"
+    title="Click to view.">Figure 7.8</a></span></b><span style='font-family:
+    Arial;color:aqua'><o:p></o:p></span></p>
+    <p class=MsoNormal align=center style='text-align:center'><b><span
+    style='font-family:Arial;color:aqua'><a href="Art\Figure_7-20.gif"
+    title="Click to view.">Figure 7.20</a></span></b><span style='font-family:
+    Arial;color:aqua'><o:p></o:p></span></p>
+    <p class=MsoNormal align=center style='text-align:center'><b><span
+    style='font-family:Arial;color:aqua'><a href="Art\Figure_7-22.gif"
+    title="Click to view.">Figure 7.22</a></span></b><span style='font-family:
+    Arial;color:aqua'><o:p></o:p></span></p>
+    <p class=MsoNormal align=center style='text-align:center'><b><span
+    style='font-family:Arial;color:aqua'><a href="Art\Figure_7-26.gif"
+    title="Click to view.">Figure 7.26</a></span></b><span style='font-family:
+    Arial;color:aqua'><o:p></o:p></span></p>
+    <p class=MsoNormal align=center style='text-align:center'><b><span
+    style='font-family:Arial;color:aqua'><a href="Art\Figure_7-27.gif"
+    title="Click to view.">Figure 7.27</a></span></b><span style='font-family:
+    Arial;color:aqua'><o:p></o:p></span></p>
+    <p class=MsoNormal align=center style='text-align:center'><b><span
+    style='font-family:Arial;color:aqua'><a href="Art\Figure_8-6.gif"
+    title="Click to view.">Figure 8.6</a></span></b><span style='font-family:
+    Arial;color:aqua'><o:p></o:p></span></p>
+    <p class=MsoNormal align=center style='text-align:center'><b><span
+    style='font-family:Arial;color:aqua'><a href="Art\Figure_8-7.gif"
+    title="Click to view.">Figure 8.7</a></span></b><span style='font-family:
+    Arial;color:aqua'><o:p></o:p></span></p>
+    <p class=MsoNormal align=center style='text-align:center'><b><span
+    style='font-family:Arial;color:aqua'><a href="Art\Figure_8-13.gif"
+    title="Click to view.">Figure 8.13</a></span></b><span style='font-family:
+    Arial;color:aqua'><o:p></o:p></span></p>
+    <p class=MsoNormal align=center style='text-align:center'><b><span
+    style='font-family:Arial;color:aqua'><a href="Art\Figure_8-16.gif"
+    title="Click to view.">Figure 8.16</a></span></b><span style='color:blue'><o:p></o:p></span></p>
+    </div>
+    <![if !mso]></td>
+   </tr>
+  </table>
+  <![endif]></v:textbox>
+ <w:wrap type="square" anchorx="page"/>
+</v:shape><![endif]--><![if !vml]><img width=129 height=683
+src="./Readme_files/image001.gif" align=right hspace=12
+alt="Text Box: Color Figures&#13;&#10;Figure 2.7&#13;&#10;Figure 2.10&#13;&#10;Figure 2.12&#13;&#10;Figure 3.2&#13;&#10;Figure 3.3&#13;&#10;Figure 3.4&#13;&#10;Figure 3.5&#13;&#10;Figure 3.6&#13;&#10;Figure 3.8&#13;&#10;Figure 3.9&#13;&#10;Figure 3.10&#13;&#10;Figure 3.11&#13;&#10;Figure 3.12&#13;&#10;Figure 3.15&#13;&#10;Figure 3.16&#13;&#10;Figure 3.17&#13;&#10;Figure 3.18&#13;&#10;Figure 3.19&#13;&#10;Figure 5.2&#13;&#10;Figure 5.2A&#13;&#10;Figure 5.6&#13;&#10;Figure 5.12&#13;&#10;Figure 5.13&#13;&#10;Figure 5.14&#13;&#10;Figure 5.15&#13;&#10;Figure 5.26&#13;&#10;Figure 5.28&#13;&#10;Figure 5.29&#13;&#10;Figure 7.3&#13;&#10;Figure 7.8&#13;&#10;Figure 7.20&#13;&#10;Figure 7.22&#13;&#10;Figure 7.26&#13;&#10;Figure 7.27&#13;&#10;Figure 8.6&#13;&#10;Figure 8.7&#13;&#10;Figure 8.13&#13;&#10;Figure 8.16&#13;&#10;"
+v:shapes="_x0000_s1032"><![endif]><!--[if gte vml 1]><v:shapetype id="_x0000_t75"
+ coordsize="21600,21600" o:spt="75" o:preferrelative="t" path="m@4@5l@4@11@9@11@9@5xe"
+ filled="f" stroked="f">
+ <v:stroke joinstyle="miter"/>
+ <v:formulas>
+  <v:f eqn="if lineDrawn pixelLineWidth 0"/>
+  <v:f eqn="sum @0 1 0"/>
+  <v:f eqn="sum 0 0 @1"/>
+  <v:f eqn="prod @2 1 2"/>
+  <v:f eqn="prod @3 21600 pixelWidth"/>
+  <v:f eqn="prod @3 21600 pixelHeight"/>
+  <v:f eqn="sum @0 0 1"/>
+  <v:f eqn="prod @6 1 2"/>
+  <v:f eqn="prod @7 21600 pixelWidth"/>
+  <v:f eqn="sum @8 21600 0"/>
+  <v:f eqn="prod @7 21600 pixelHeight"/>
+  <v:f eqn="sum @10 21600 0"/>
+ </v:formulas>
+ <v:path o:extrusionok="f" gradientshapeok="t" o:connecttype="rect"/>
+ <o:lock v:ext="edit" aspectratio="t"/>
+</v:shapetype><v:shape id="_x0000_s1026" type="#_x0000_t75" alt="" style='position:absolute;
+ left:0;text-align:left;margin-left:0;margin-top:0;width:136.1pt;height:194.05pt;
+ z-index:1;mso-position-horizontal:left;mso-position-horizontal-relative:text;
+ mso-position-vertical:top;mso-position-vertical-relative:line' o:allowoverlap="f"
+ stroked="t" strokecolor="#ffc">
+ <v:imagedata src="Readme_files\image003.jpg"/>
+ <w:wrap type="square" anchorx="page"/>
+</v:shape><![endif]--><![if !vml]><img width=184 height=262
+src="./Readme_files/image002.gif" align=left hspace=12 v:shapes="_x0000_s1026"><![endif]><span
+style='font-size:12.0pt;mso-bidi-font-size:10.0pt'><a href="#Contents"></a><a
+href="#Contents"></a><a href="#Contents"
+title="Click to go directly to the contents directory."><span style='mso-ansi-font-size:
+12.0pt'>Contents</span></a>&nbsp; \&nbsp; <a href="#Copyright"
+title="Click to go directly to the copyright information."><span
+style='mso-ansi-font-size:12.0pt'>Copyright Info</span></a> \ &nbsp;<a
+href="#System" title="Click to view the basic system requirements."><span
+style='mso-ansi-font-size:12.0pt'>System Requirements</span></a><o:p></o:p></span></p>
+
+<p class=MsoBodyText><a href="Readme_files\image002.jpg"></a>A book about CMOS IC
+layout is not complete without color graphics; however, including color
+graphics within this book would have raised the price astronomically. We wanted
+this book to be as affordable as possible. So, together with the publishers, we
+decided to include a CD-ROM to house the additional color pictures…the perfect
+solution!</p>
+
+<p class=MsoBodyText><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoBodyText>On the CD, you will find color versions of many of the
+figures from the book. Simply click on the figure number to the right that
+you’d like to view. Dan Clein—using Tanner Research, Inc. layout editor tool
+called L-Edit—generated most of them. These more complex color examples have
+been included here to help you better understand the concepts demonstrated by
+the printed black and white versions.</p>
+
+<p class=MsoBodyText>The color figures have also been saved as <span
+class=MsoHyperlink><a href="http://www.adobe.com/products/acrobat/main.html"
+title="Click to jump to Adobe's website.">Adobe Acrobat</a></span> PDF files to
+allow better viewing access than a web browser will allow. <span
+class=MsoHyperlink><a
+href="http://www.adobe.com/products/acrobat/readermain.html"
+title="Click to jump to Adobe's website.">Acrobat Reader 4.0</a></span> is
+included on this CD. You can <a
+href="Software\Acrobat%20Reader%204.0%20+%20search\CD\Reader\AcroRd32.exe"
+title="Click to launch Acrobat Reader from the CD.">launch</a> it directly from
+the CD or <a
+href="Software\Acrobat%20Reader%204.0%20+%20search\Install\rs40eng.exe"
+title="Click to install Acrobat Reader 4.0 onto your computer.">install</a> it
+onto your computer’s hard drive.&nbsp; </p>
+
+<p class=MsoBodyText><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoBodyText>Some of the complex chips included on the CD are the property
+of <span class=MsoHyperlink><a href="http://www.mosaid.com/"
+title="Click to go to the Mosaid Technologies website.">MOSAID Technologies,
+Inc.</a></span>, who agreed to let us include them in order to help the reader
+better understand and evaluate different types of layout design combined in a
+real environment. This was our initial goal. Check out the <span
+class=MsoHyperlink><a href="Presentations\Flows\Flows.htm"
+title="Click to launch the Mosaid Technology Flows presentation.">Flows</a></span>
+and <span class=MsoHyperlink><a
+href="Presentations\Cell%20Libraries\Cell%20Libraries.htm"
+title="Click to launch the Mosaid Technology Cell Libraries presentation.">Cell
+Library</a></span> presentations. You can view them within your web browser, in
+their native PowerPoint format, or as Acrobat pdf files. Go to the <a
+href="#Contents" title="Click to jump to the file directory.">file directory</a>
+below to access the various file format options.&nbsp;</p>
+
+<p class=MsoBodyText><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoBodyText>During the development of the text we found that there are
+some very “hot” issues today, like extraction of layout resistance and
+capacitance, migration tools and principles, deep submicron and very deep
+submicron design, etc. We decided to talk with marketing managers from <span
+class=MsoHyperlink><a href="http://www.mentor.com/"
+title="Click to go to the Mentor Graphics website.">Mentor Graphics</a></span>,
+<span class=MsoHyperlink><a href="http://www.cadence.com/"
+title="Click to go to the Cadence website.">Cadence</a></span>, <span
+class=MsoHyperlink><a href="http://www.sagantec.com/"
+title="Click to go to the Sagantec website.">Sagantec</a></span>, and others
+and asked to include some of their presentations addressing these new concepts,
+methodologies, and tools. </p>
+
+<p class=MsoBodyText>&nbsp;</p>
+
+<p class=MsoBodyText>The<span style='color:white'> </span><span
+class=MsoHyperlink><a href="Presentations\Cadence\Cadence.htm"
+title="Click to launch the Cadence Design Systems presentation.">Cadence Design
+Systems</a></span><span style='color:white'> </span>presentation talks about
+ASIC flow and demonstrates how physical information can be used earlier in the
+design process in order to provide designers with “real world” data for
+simulations.</p>
+
+<p class=MsoBodyText>&nbsp;</p>
+
+<p class=MsoBodyText>The<span style='color:white'> </span><span
+class=MsoHyperlink><a
+href="Presentations\Mentor%20Graphics\Mentor%20Graphics.htm"
+title="Point and click to launch the Mentor Graphics presentation.">Mentor
+Graphics</a></span><span style='color:white'> </span>presentation emphasizes
+the extraction importance in 0.25 microns and below gate-size processes.</p>
+
+<p class=MsoBodyText>&nbsp;</p>
+
+<p class=MsoBodyText>The <span class=MsoHyperlink><a
+href="Presentations\Sagantec\Sagantec.htm"
+title="Click to launch the Sagantec presentation.">Sagantec</a></span><span
+style='color:white'> </span>presentation talks about the concept of migrating
+layout from one process to another, compaction within a layout polygon editor
+environment, and a new concept called “enlargement” or reverse compaction for
+wires.</p>
+
+<p class=MsoBodyText>&nbsp;</p>
+
+<p class=MsoBodyText>There are many other tools and presentations available on
+various Electrical Design Automation (EDA) vendors’ sites, but these are the
+only ones that answered our request in time for the publishing deadline. We are
+confident that for a future revision of our book, more EDA vendors will provide
+interesting topic presentations without too much “tool sales pitch.” </p>
+
+<p class=MsoBodyText>&nbsp;</p>
+
+<p class=MsoBodyText>The most incredible contribution to this book comes
+courtesy of <span class=MsoHyperlink><a href="http://www.tanner.com/"
+title="Click to go to the Tanner Research website.">Tanner Research</a>, Inc.</span><span
+class=MsoHyperlink><span style='color:#FFFFCC;text-decoration:none;text-underline:
+none'>,</span></span><span class=MsoHyperlink><span style='text-decoration:
+none;text-underline:none'> </span></span>who put Dan’s library inside their<span
+style='color:white'> </span><span class=MsoHyperlink><a
+href="Software\Tanner%20Tools\Setup.exe"
+title="Click to install the Tanner Tools demo.">Tanner Tools L-Edit demo</a></span><span
+style='color:white'> </span>and allowed us to include this demo version on our
+CD-ROM. This tool offers&nbsp; you a tremendous opportunity to practice as you
+learn about each topic. This pared-down version provides access to “danclein”
+library so once you learn how to open the library, all our secrets will be in
+your hands! </p>
+
+<p class=MsoBodyText>Click on the hyperlink above to install the Tanner Tools
+demo. Then, open the “danclein” library within the samples\danclein directory.
+Learn how from the demo of L-Edit; then use the Cometic.xst files for two
+versions of the process: a normal one and a planar one.</p>
+
+<p class=MsoBodyText>Using the cross-view option, you can even evaluate a vertical
+view of the process we used for this book; the cross section files are in the
+same directory.&nbsp;&nbsp;</p>
+
+<p class=MsoBodyText>Although the L-Edit demo installation states that it is a
+60-day trial version, this is not the case; you can use the tool demo as long
+as you own the CD; however, “Save” has been disabled in this demo version. To
+purchase a complete version of the Tanner tool, we encourage you to checkout
+the Tanner Research website at <span class=MsoHyperlink><a
+href="http://www.tanner.com/"
+title="Click to go to the Tanner Reasearch website.">www.tanner.com</a></span><span
+style='color:white'>. </span>Please note that Tanner does offer student
+discounts.</p>
+
+<p class=MsoBodyText>&nbsp;</p>
+
+<p class=MsoBodyText>We’re hoping to build a FAQ website down the line. In the
+meantime, feel free to email your queries to us at <span class=MsoHyperlink><a
+href="mailto:cometic@ieee.org"
+title="Email us with your comments and suggestions!">cometic@ieee.org</a></span><span
+style='color:white'>.&nbsp;</span></p>
+
+<p class=MsoBodyText>We hope that you will enjoy reading our book…at least as
+much as we enjoyed writing it!</p>
+
+<p class=MsoBodyText><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoBodyText>Dan Clein &amp; Gregg Shimokura</p>
+
+<p class=MsoBodyText>&nbsp;</p>
+
+<p class=MsoBodyText>&nbsp;</p>
+
+<p class=MsoBodyText>____________________________________________________________________</p>
+
+<h1><a name=Contents></a><span style='mso-fareast-font-family:"MS Mincho"'>Accessing
+the CD Contents</span></h1>
+
+<p class=MsoBodyText><span style='mso-fareast-font-family:"MS Mincho"'>Most of the
+files have been prepared as web-ready (htm), Adobe Acrobat (pdf), and
+PowerPoint slideshows (pps). We’ve included these files in multiple formats to
+offer you greater viewing access than a single format would allow. <o:p></o:p></span></p>
+
+<p class=MsoBodyText><span style='mso-fareast-font-family:"MS Mincho"'>All of
+the contents have been hyperlinked below. Simply point and click to the file
+you’d like to view or the software you wish to install. <o:p></o:p></span></p>
+
+<p class=MsoPlainText><span style='mso-fareast-font-family:"MS Mincho";
+color:#FFFFCC'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=1 cellspacing=0 cellpadding=0 width="99%" style='width:99.02%;
+ border-collapse:collapse;border:none;mso-border-alt:solid #FFFFCC 1.5pt;
+ mso-padding-alt:0in 5.75pt 0in 5.75pt'>
+ <thead>
+  <tr>
+   <td width="57%" valign=top style='width:57.1%;border:solid #FFFFCC 1.5pt;
+   background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+   <h1>Directory\File Location</h1>
+   </td>
+   <td width="42%" valign=top style='width:42.9%;border:solid #FFFFCC 1.5pt;
+   border-left:none;mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;
+   padding:0in 5.75pt 0in 5.75pt'>
+   <h1>File Description</h1>
+   </td>
+  </tr>
+ </thead>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-top-alt:solid #FFFFCC 1.5pt;padding:0in 5.75pt 0in 5.75pt'>
+  <h3><span class=MsoHyperlink><span style='font-family:Arial;mso-bidi-font-family:
+  "Times New Roman"'><a href="Readme.txt">Readme.txt</a><o:p></o:p></span></span></h3>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-top-alt:solid #FFFFCC 1.5pt;mso-border-left-alt:solid #FFFFCC 1.5pt;
+  background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Basic CD information.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <h2><span class=MsoHyperlink><a href="Readme.htm">Readme.htm</a><o:p></o:p></span></h2>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Main CD interface. Open this file within your web
+  browser to link to the main CD contents.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Art\Art.pdf">\Art\Art.pdf</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>All color figures contained within one Adobe Acrobat
+  file.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Art\Figure_2-7.gif">\Art\Figure_2-7</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Color version of printed book figure.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Art\Figure_2-10.gif">\Art\Figure_2-10</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Color version of printed book figure.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Art\Figure_2-12.gif">\Art\Figure_2-12</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Color version of printed book figure.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Art\Figure_3-2.gif">\Art\Figure_3-2</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Color version of printed book figure.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Art\Figure_3-3.gif">\Art\Figure_3-3</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Color version of printed book figure.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Art\Figure_3-4.gif">\Art\Figure_3-4</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Color version of printed book figure.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Art\Figure_3-5.gif">\Art\Figure_3-5</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Color version of printed book figure.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Art\Figure_3-6.gif">\Art\Figure_3-6</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Color version of printed book figure.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Art\Figure_3-8.gif">\Art\Figure_3-8</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Color version of printed book figure.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Art\Figure_3-9.gif">\Art\Figure_3-9</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Color version of printed book figure.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Art\Figure_3-10.gif">\Art\Figure_3-10</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Color version of printed book figure.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Art\Figure_3-11.gif">\Art\Figure_3-11</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Color version of printed book figure.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Art\Figure_3-12.gif">\Art\Figure_3-12</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Color version of printed book figure.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Art\Figure_3-15.gif">\Art\Figure_3-15</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Color version of printed book figure.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Art\Figure_3-16.gif">\Art\Figure_3-16</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Color version of printed book figure.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Art\Figure_3-17.gif">\Art\Figure_3-17</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Color version of printed book figure.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Art\Figure_3-18.gif">\Art\Figure_3-18</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Color version of printed book figure.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Art\Figure_3-19.gif">\Art\Figure_3-19</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Color version of printed book figure.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Art\Figure_5-2.gif">\Art\Figure_5-2</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Color version of printed book figure.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Art\Figure_5-2A.gif">\Art\Figure_5-2A</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Color version of printed book figure.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Art\Figure_5-6.gif">\Art\Figure_5-6</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Color version of printed book figure.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Art\Figure_5-12.gif">\Art\Figure_5-12</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Color version of printed book figure.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Art\Figure_5-13.gif">\Art\Figure_5-13</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Color version of printed book figure.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Art\Figure_5-14.gif">\Art\Figure_5-14</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Color version of printed book figure.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Art\Figure_5-15.gif">\Art\Figure_5-15</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Color version of printed book figure.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Art\Figure_5-26.gif">\Art\Figure_5-26</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Color version of printed book figure.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Art\Figure_5-28.gif">\Art\Figure_5-28</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Color version of printed book figure.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Art\Figure_5-29.gif">\Art\Figure_5-29</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Color version of printed book figure.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Art\Figure_7-3.gif">\Art\Figure_7-3</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Color version of printed book figure.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Art\Figure_7-8.gif">\Art\Figure_7-8</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Color version of printed book figure.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Art\Figure_7-20.gif">\Art\Figure_7-20</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Color version of printed book figure.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Art\Figure_7-22.gif">\Art\Figure_7-22</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Color version of printed book figure.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Art\Figure_7-26.gif">\Art\Figure_7-26</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Color version of printed book figure.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Art\Figure_7-27.gif">\Art\Figure_7-27</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Color version of printed book figure.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Art\Figure_8-6.gif">\Art\Figure_8-6</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Color version of printed book figure.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Art\Figure_8-7.gif">\Art\Figure_8-7</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Color version of printed book figure. </p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Art\Figure_8-13.gif">\Art\Figure_8-13</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Color version of printed book figure.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Art\Figure_8-16.gif">\Art\Figure_8-16</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Color version of printed book figure.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Presentations\Cadence\Cadence.htm">\Presentations\Cadence\Cadence.htm</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Cadence presentation saved as a web-ready htm.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Presentations\Cadence\Cadence.pps">\Presentations\Cadence\Cadence.pps</a>
+  <o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Cadence presentation saved as an independent PowerPoint
+  file.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Presentations\Cadence\Cadence.exe">\Presentations\Cadence\Cadence.exe</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Cadence presentation packed with a PowerPoint viewer.
+  Run file to extract.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Presentations\Cell%20Libraries\Cell%20Libraries.htm">\Presentations\Cell
+  Libraries\Cell Libraries.htm</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>MOSAID Cell library presentation saved as a web-ready
+  htm.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Presentations\Cell%20Libraries\Cell%20Libraries.pps">\Presentations\Cell
+  Libraries\Cell Libraries.pps</a> <o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>MOSAID Cell library presentation saved as an independent
+  PowerPoint file.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Presentations\Cell%20Libraries\Cell%20Libraries.exe">\Presentations\Cell
+  Libraries\Cell Libraries.exe</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>MOSAID Cell library presentation packed with a
+  PowerPoint viewer. Run the exe file to extract.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Presentations\Cell%20Libraries\Cell%20Libraries.pdf">\Presentations\Cell
+  Libraries\Cell Libraries.pdf</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>MOSAID Cell library presentations saved as an Adobe
+  Acrobat pdf. Launch Acrobat Reader to view.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Presentations\Flows\Flows.htm">\Presentations\Flows\Flows.htm</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>MOSAID Flows presentation saved as a web-ready htm.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Presentations\Flows\Flows.pps">\Presentations\Flows\Flows.pps</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>MOSAID Flows presentation saved as an independent
+  PowerPoint file.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Presentations\Flows\Flows.exe">\Presentations\Flows\Flows.exe</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>MOSAID Flows presentation packed with a PowerPoint viewer.
+  Run the exe file to extract.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Presentations\Flows\Flows.pdf">\Presentations\Flows\Flows.pdf</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>MOSAID Flows presentations saved as an Adobe Acrobat
+  pdf. Launch Acrobat Reader to view.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Presentations\Mentor%20Graphics\Mentor%20Graphics.htm">\Presentations\Mentor
+  Graphics\Mentor Graphics.htm</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Mentor Graphics presentation saved as a web-ready htm.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Presentations\Mentor%20Graphics\Mentor%20Graphics.pps">\Presentations\Mentor
+  Graphics\Mentor Graphics.pps</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Mentor Graphics presentation saved as an independent
+  PowerPoint file.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Presentations\Mentor%20Graphics\Mentor%20Graphics.exe">\Presentations\Mentor
+  Graphics\Mentor Graphics.exe</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Mentor Graphics presentation packed with a PowerPoint
+  viewer. Run the exe file to extract.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Presentations\Sagantec\Sagantec.htm">\Presentations\Sagantec\Sagantec.htm</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Sagantec presentation saved as a web-ready htm.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Presentations\Sagantec\Sagantec.pps">\Presentations\Sagantec\Sagantec.pps</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Sagantec presentation saved as an independent PowerPoint
+  file.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Presentations\Sagantec\Sagantec.exe">\Presentations\Sagantec\Sagantec.exe</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Sagantec presentation packed with a PowerPoint viewer.
+  Run the exe file to extract.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Software\Acrobat%20Reader%204.0%20+%20search\CD\Reader\AcroRd32.exe">\Software\Acrobat
+  Reader 4.0 + search\CD\Reader\ArcrRd32.exe</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Adobe Acrobat Reader. Launch this file to run the
+  program on the CD.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Software\Acrobat%20Reader%204.0%20+%20search\Install\rs40eng.exe">\Software\Acrobat
+  Reader 4.0 + search\CD\Install\rs40eng.exe</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Adobe Acrobat Reader installation program. Run<span
+  style="mso-spacerun: yes">  </span>the exe file to install it on your
+  computer.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border-top:none;border-left:
+  solid #FFFFCC 1.5pt;border-bottom:none;border-right:solid #FFFFCC 1.5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Software\IE5\ie5setup.exe">\Software\IE5\ie5setup.exe</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border:none;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Microsoft Internet Explorer 5.0. Run the exe file to
+  install this customized web browser.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="57%" valign=top style='width:57.1%;border:solid #FFFFCC 1.5pt;
+  border-top:none;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:2.0pt'><span class=MsoHyperlink><b><span
+  style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><a
+  href="Software\Tanner%20Tools\Setup.exe">\Software\Tanner Tools\Setup.exe</a><o:p></o:p></span></b></span></p>
+  </td>
+  <td width="42%" valign=top style='width:42.9%;border-top:none;border-left:
+  none;border-bottom:solid #FFFFCC 1.5pt;border-right:solid #FFFFCC 1.5pt;
+  mso-border-left-alt:solid #FFFFCC 1.5pt;background:maroon;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText>Tanner Technologies Tool demo. Run the exe file to
+  install this demo on your computer. The time trial limitations have been
+  disabled.</p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoBodyText><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<h1><a name=Copyright></a>Copyright Information</h1>
+
+<p class=MsoBodyText><a href="http://www.newnespress.com/"></a><!--[if gte vml 1]><v:shape
+ id="_x0000_s1028" type="#_x0000_t75" alt=""
+ href="http://www.newnespress.com/" style='position:absolute;left:0;
+ text-align:left;margin-left:0;margin-top:0;width:51.75pt;height:66pt;
+ z-index:2;mso-position-horizontal:left;mso-position-horizontal-relative:text;
+ mso-position-vertical-relative:line' o:allowoverlap="f" o:button="t">
+ <v:imagedata src="Readme_files\image007.jpg"/>
+ <w:wrap type="square" anchorx="page"/>
+</v:shape><![endif]--><![if !vml]><a href="http://www.newnespress.com/"><img
+border=0 width=69 height=88 src="Readme_files\image007.jpg" align=left
+hspace=12 v:shapes="_x0000_s1028"></a><![endif]><a
+href="http://www.newnespress.com/"></a><a href="http://www.newnespress.com/"></a><a
+href="http://www.newnespress.com/"></a><a href="http://www.newnespress.com/"></a><a
+href="http://www.newnespress.com/"></a><a href="http://www.newnespress.com/"></a><a
+href="http://www.newnespress.com/"></a><a href="http://www.newnespress.com/"></a><a
+href="http://www.newnespress.com/"></a><a href="http://www.newnespress.com/"></a><a
+href="http://www.newnespress.com/"></a><a href="http://www.newnespress.com/"></a><a
+href="http://www.newnespress.com/"></a><a href="http://www.newnespress.com/"></a><a
+href="http://www.newnespress.com/"></a><a href="http://www.newnespress.com/"></a><span
+class=MsoHyperlink><a href="http://www.bh.com/newnes/"
+title=www.newnespress.com>Newnes</a></span> is an imprint of
+Butterworth-Heinemann. </p>
+
+<p class=MsoBodyText>Copyright 2000 by Butterworth-Heinemann</p>
+
+<p class=MsoBodyText><img border=0 width=27 height=19 id="_x0000_i1025"
+src="Readme_files\ReedElse.gif">&nbsp;A member of the Reed Elsevier Group</p>
+
+<p class=MsoBodyText>All rights reserved.</p>
+
+<p class=MsoBodyText><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoBodyText>No part of this publication may be reproduced, stored in a
+retrieval system, or transmitted in any form or by any means, electronic,
+mechanical, photocopying, recording, or otherwise, without the prior written
+permission of the publisher.</p>
+
+<p class=MsoBodyText><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoBodyText>The contents of this CD are provided on an “as is” basis
+without warranty of any kind concerning the accuracy or completeness of the
+software product. Neither the author, publisher nor the publisher’s authorized
+resale agents shall be held responsible for any defect or claims concerning
+virus contamination, possible errors, omissions or other inaccuracies or be
+held liable for any loss or damage whatsoever arising out of the use or
+inability to use this software product.</p>
+
+<p class=MsoBodyText><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoBodyText>No party involved in the sale or distribution of this
+software is authorized to make any modification or addition whatsoever to this
+limited warranty.</p>
+
+<p class=MsoBodyText><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoBodyText>DEMO L-Edit™ V7.5 IC Layout Editor is the property of
+Tanner EDA, a division of Tanner Research, Inc.</p>
+
+<p class=MsoBodyText>Adobe, the Adobe logo, Acrobat, the Acrobat logo are
+trademarks of Adobe Systems Incorporated.</p>
+
+<p class=MsoBodyText>Microsoft, Windows, and Windows NT are either registered trademarks
+or trademarks of Microsoft Corporation in the United States and/or other
+countries.</p>
+
+<p class=MsoBodyText><span style='mso-fareast-font-family:"MS Mincho"'>All
+other trademarks and registered trademarks are the property of their respective
+holders and are acknowledged.<o:p></o:p></span></p>
+
+<p class=MsoBodyText><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoBodyText>Beyond providing replacements for defective discs,
+Butterworth-Heinemann does not provide technical support for the software
+included on this CD-ROM. Send any requests for replacement of a defective disc
+to <span style='color:#FFCC66'>Newnes Press, Customer Service Dept., 225
+Wildwood Avenue, Woburn, MA 01801-2041</span> or email <u><a
+href="mailto:techsupport@bhusa.com">techsupport@bhusa.com</a></u>. Be sure to
+reference item number <span style='color:#FFCC66'>CD-71947-PC</span>. </p>
+
+<h1><span style='font-size:10.0pt;mso-font-kerning:0pt'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></h1>
+
+<h1><a name=System></a>System Requirements</h1>
+
+<p class=MsoBodyText>To surf the contents of the CD, you will need to have a web
+browser installed on your computer. If you already have a web browser
+installed, launch the application and open the file &quot;D:\Readme.htm&quot;
+(where &quot;D&quot; is the designation of your CD drive).</p>
+
+<p class=MsoBodyText>If you do not have a web browser installed, you can
+install Microsoft Internet Explorer 5.0 directly from the CD by running
+“D:\IE5-BH\IE5Setup.exe” (where &quot;D&quot; is the designation of your CD
+drive). Follow the directions on screen to complete the installation. After
+successfully installing the web browser, launch the application and open the
+file &quot;D:\Readme.htm&quot; (where &quot;D&quot; is the designation of your
+CD drive).</p>
+
+<p class=MsoBodyText style='margin-left:.5in;text-indent:-.25in;mso-list:l1 level1 lfo5;
+tab-stops:list .5in'><![if !supportLists]><span style='font-family:Symbol;
+font-weight:normal'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]>486 with a 66 MHz processor (Pentium processor
+recommended) or higher processor </p>
+
+<p class=MsoBodyText style='margin-left:.5in;text-indent:-.25in;mso-list:l1 level1 lfo5;
+tab-stops:list .5in'><![if !supportLists]><span style='font-family:Symbol;
+font-weight:normal'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]>Microsoft Windows® 95 or later; or Microsoft Windows
+NT® Workstation operating system version 4.0</p>
+
+<p class=MsoBodyText style='margin-left:.5in;text-indent:-.25in;mso-list:l1 level1 lfo5;
+tab-stops:list .5in'><![if !supportLists]><span style='font-family:Symbol;
+font-weight:normal'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]>For Microsoft Windows 95 or Windows 98: 16 MB
+(megabytes) of RAM minimum</p>
+
+<p class=MsoBodyText style='margin-left:.5in;text-indent:-.25in;mso-list:l1 level1 lfo5;
+tab-stops:list .5in'><![if !supportLists]><span style='font-family:Symbol;
+font-weight:normal'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]>For Microsoft Windows NT 4: 32 MB of RAM minimum and
+Service Pack 3 (or higher)</p>
+
+<p class=MsoBodyText style='margin-left:.5in;text-indent:-.25in;mso-list:l1 level1 lfo5;
+tab-stops:list .5in'><![if !supportLists]><span style='font-family:Symbol;
+font-weight:normal'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]>147 MB of available hard-disk space (Number indicates
+typical installation; your hard-disk usage will vary depending on
+configuration. Choices made during custom installation may require more or less
+hard-disk space.) </p>
+
+<p class=MsoBodyText style='margin-left:.5in;text-indent:-.25in;mso-list:l1 level1 lfo5;
+tab-stops:list .5in'><![if !supportLists]><span style='font-family:Symbol;
+font-weight:normal'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]>CD-ROM drive </p>
+
+<p class=MsoBodyText style='margin-left:.5in;text-indent:-.25in;mso-list:l1 level1 lfo5;
+tab-stops:list .5in'><![if !supportLists]><span style='font-family:Symbol;
+font-weight:normal'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]>VGA or higher-resolution monitor; Super VGA recommended</p>
+
+<p class=MsoBodyText>Minimal install (browser-only):</p>
+
+<p class=MsoBodyText>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Required for
+install:&nbsp;&nbsp;&nbsp;&nbsp; 45 MB</p>
+
+<p class=MsoBodyText>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Required to
+run:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 27 MB after restart</p>
+
+<p class=MsoBodyText>Typical install:</p>
+
+<p class=MsoBodyText>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Required for
+install:&nbsp;&nbsp;&nbsp;&nbsp; 70 MB</p>
+
+<p class=MsoBodyText>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Required to
+run:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 55 MB after restart</p>
+
+<p class=MsoBodyText>Full install:</p>
+
+<p class=MsoBodyText>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Required for
+install:&nbsp;&nbsp;&nbsp;&nbsp; 111 MB</p>
+
+<p class=MsoBodyText>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Required to
+run:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 80 MB after restart</p>
+
+<p class=MsoBodyText>&nbsp;</p>
+
+<p class=MsoBodyText>Some components may require additional systems resources
+not outlined above.</p>
+
+<p class=MsoBodyText>&nbsp;</p>
+
+<p class=MsoBodyText>DISK SPACE REQUIREMENTS FOR INTERNET EXPLORER 5
+INSTALLATION</p>
+
+<p class=MsoBodyText>Internet Explorer 5 and Internet Tools Setup installs the
+majority of its files on the drive where the Windows operating system is
+installed, regardless of the installation location you choose. To free up space
+on your hard disk in order to meet the Internet Explorer 5 disk-space
+installation requirements, you must free up space on the drive where the
+Windows operating system is installed.</p>
+
+</div>
+
+</body>
+
+</html>
