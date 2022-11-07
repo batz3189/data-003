@@ -1,0 +1,50 @@
+
+/*    file :  twocross.c
+ *
+ *    purpose : implemnet of two-point crossover
+ *
+ */
+#include <stdlib.h>
+#include <time.h>
+#include <stdio.h>
+
+void
+twocross(Kid1,Kid2,len)
+int 	len;			/* the length of the vector */
+int	*Kid1;			/* pointer to crossover partners */
+int	*Kid2;
+{
+	int 	Fir,		/* first crossover-position */
+			  Sec,		/* second crossover-position */
+		i;
+
+
+	int	Tmp;		/* used for swapping alleles */
+
+	int	tmp;		/* used for swapping the crossover points */
+
+	randomize();
+	Fir=random(len);	/* choose the first crossover point */
+
+	Sec=random(len);	/* choose the second crossover point */
+	Sec=(2*Sec)%len;
+
+		  /* sort crossover points */
+	if (Fir>=Sec)
+	{
+		tmp=Fir;
+		Fir=Sec;
+		Sec=tmp;
+	}
+
+	/* crossover through exchanging information */
+
+	for (i=Fir; i<Sec;i++)
+	{
+		Tmp=Kid1[i];
+		Kid1[i]=Kid2[i];
+		Kid2[i]=Tmp;
+	}/* end for */
+} /* end 2cross */
+
+
