@@ -1,0 +1,568 @@
+#include <graphics.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <time.h>
+#include <conio.h>
+#include <dos.h>
+
+#define NAME_MAX 80
+
+
+void
+ga(char *datFile)
+{
+	/* request autodetection */
+	int gdriver=DETECT,gmode,errorcode;
+	int prex,bprey,curx,bcury,mprey,mcury,
+			wprey,wcury,vprey,vcury;
+  //	int maxcolor,ystep;
+	double temp;
+
+	time_t	begin,finish;
+
+	char    Msg[NAME_MAX];
+	char    patternFile[NAME_MAX], weightFile[NAME_MAX],
+			resultFile[NAME_MAX];
+	int     **population;
+	double  **pattern, **target;
+	double *fit;
+	int     M,N,H,iter,P,K;  /* K: each weight represented by K bits */
+			/*  M: pattern no.;  N: input dim;  H: hidden No. */
+			/* iter: generation number;  P: output dim */
+	int  status, popsize,length,total,TOTAL;
+		/* total: total pattern number */
+	double c_rate, m_rate,criti; /* crossover and mutate rate */
+	int i,j,te;    /* te: flag for termination (1) */
+	int     ind;    /* index for the best fitness */
+	double max,mean,worst;
+	int	 m_t;
+	int flag_m;     /* flag for mutatation, 1, variable, 0 cons */
+	int flag_c;		/* 0: one, 1: uniform, 2: two */
+	int fit_shift;  /* shift fitness, 1:yes, 0:no */
+	int true;
+	char condition;
+	double *gau;    /* store gaussian function value */
+	double vari;	/* variance value of fitness vector */
+	double rm_rate;	/* real mutate probability */
+
+	FILE *fp1;
+
+	extern void initiali(int **,int,int);
+	extern void fitness(int **,double *,int,int,double **,double **,
+			int,int,int,int,int,int *, char *,char *,double,int,int);
+	extern void selectio(int **,double *,int,int,int,int);
+	extern void crossove(int **,int,int,double,int,int);
+	extern void Bmutate(int *,double,int,int,int,double *);
+
+	extern int maximum(double *,int);
+	extern double average(double *,int);
+	extern double minimial(double *,int);
+	extern double gaussian(double);
+	extern double variance(double *,double,int);
+
+	
+	int getParams(char *,char *,char *,char *, int *,
+					int *,int *,int *,int *,int *,int *,int *,
+					double *,double *,double *,int *,int *,int *,
+					int *);
+	void savePara(FILE *,char *,char *,char *,char *, int ,
+					int,int,int,int,int,int,int ,int,
+					double,double,double,int,int,int,
+					int);
+	int getPattern(char *,double **,double **,int *,int,int,int);
+	/* get parameters from runFile */
+
+	int c_break(void);
+
+
+	begin=time(NULL);
+
+	status=getParams(datFile,patternFile,weightFile,resultFile,
+					&H,&iter,&K,&N,&P,&M,&total,&popsize,&c_rate,&m_rate,
+					&criti,&flag_m,&fit_shift,&m_t,&flag_c);
+	if (status!=1)
+	{
+		printf("something wrong with open %s\n",datFile);
+		exit(1);
+	}
+
+	if (M>total)
+	{
+		printf("training patterns should be less than total patterns\n");
+		exit(1);
+	}
+
+	length=((N+1)*H+(H+1)*P)*K;      /* length of indiviudal */
+
+	savePara(stderr,datFile,patternFile,weightFile,resultFile,
+					H,iter,K,N,P,M,total,popsize,length,c_rate,m_rate,
+					criti,flag_m,fit_shift,m_t,flag_c);
+
+	do
+	{
+		printf("check, then selection, c: continue; q:quit\n");
+		scanf("%c",&condition);
+		switch(condition)
+		{
+			case 'c': true=0;
+				break;
+			case 'C': true=0;
+				break;
+			case 'q': exit(1);
+			case 'Q': exit(1);
+			default: true=1;
+
+		}
+	}
+	while (true==1);
+
+	/* assign space to matrix and vector */
+
+	pattern=(double **)calloc(total,sizeof(double *));
+	for (i=0;i<total;i++)
+		pattern[i]=(double *)calloc(N,sizeof(double));
+
+	target=(double **)calloc(total,sizeof(double *));
+	for (i=0;i<total;i++)
+		target[i]=(double *)calloc(P,sizeof(double));
+
+	population=(int **)calloc(popsize,sizeof(int *));
+	for (i=0;i<popsize;i++)
+		population[i]=(int *)calloc(length,sizeof(int));
+
+	fit=(double *)calloc(popsize,sizeof(double));
+
+	gau=(double *)calloc(K,sizeof(double));
+
+	/* obtain training pattern pair from pattern file */
+	status=getPattern(patternFile,pattern,target,&TOTAL,N,P,total);
+
+	if (status!=1)
+	{
+		printf("something wrong with open %s\n",patternFile);
+		exit(1);
+	}
+
+	/* begin generation  */
+
+	/* itilialization of population */
+	initiali(population,popsize,length);
+
+
+	/* calculate Gaussian fun. as mutation probability */
+
+	for (i=0;i<K;i++)
+		gau[i]=gaussian(sqrt(i));
+
+	/* initialize graphics and local variables */
+	initgraph(&gdriver,&gmode,"");
+
+	/* read result of initialization */
+	errorcode=graphresult();
+	if (errorcode !=grOk)
+	{
+		/* an error occurred */
+		printf("Graphics error: %s\n",grapherrormsg(errorcode));
+		exit(1);
+	}
+
+	ctrlbrk(c_break);
+	/* draw x-y */
+	line(50,80,50,400);
+	line(50,400,500,400);
+	prex=50;
+	bprey=400;
+	mprey=400;
+	wprey=400;
+	vprey=400;
+	moveto(40,80);
+	outtext("1");
+	moveto(50,70);
+	outtext("fitness");
+	moveto(25,240);
+	outtext("0.5");
+	moveto(45,405);
+	outtext("0");
+	moveto(505,390);
+	outtext("generation");
+	moveto(500,405);
+	sprintf(Msg,"%d",iter);
+	outtext(Msg);
+	moveto(275,405);
+	sprintf(Msg,"%d",iter/2);
+	outtext(Msg);
+	moveto(500,80);
+	setcolor(RED);
+	sprintf(Msg,"Best    : ----");
+	outtext(Msg);
+	moveto(500,110);
+	setcolor(YELLOW);
+	sprintf(Msg,"Mean    : ----");
+	outtext(Msg);
+	moveto(500,140);
+	setcolor(BLUE);
+	sprintf(Msg,"Worst   : ----");
+	outtext(Msg);
+	moveto(500,170);
+	setcolor(WHITE);
+	sprintf(Msg,"Variance: ----");
+	outtext(Msg);
+
+/*	maxcolor=getmaxcolor();
+
+	moveto(500,200);
+	ystep=0;
+	for (i=0;i<=maxcolor;i++)
+	{
+		if (getx()>630)
+		{
+			ystep++;
+			moveto(500,(200+ystep*20));
+		}
+		setcolor(i);
+		sprintf(Msg,"%d ",i);
+		outtext(Msg);
+
+	}
+*/
+
+	gotoxy(5,2);
+	printf(" Index     Best      Mean       Worst     Variance ");
+
+	te=0;
+	for (i=0;i<=iter;i++)
+	{
+		fitness(population,fit,popsize,length,pattern,target,N,H,P,K,M,
+				&te,weightFile,resultFile,criti,total,i);
+
+		if ((te==1)||((i%10)==0))
+		{
+			ind=maximum(fit,popsize);
+			max=fit[ind];
+			mean=average(fit,popsize);
+			worst=minimial(fit,popsize);
+			vari=variance(fit,mean,popsize);
+			temp=(450*1.0)/iter;
+			temp *=i;
+			curx =50+(int)temp;
+			bcury=400-(int)((400-80)*max);
+			mcury=400-(int)((400-80)*mean);
+			wcury=400-(int)((400-80)*worst);
+			vcury=400-(int)((400-80)*vari);
+			gotoxy(5,3);
+			printf(" %4.4d  %10.6f %10.6f %10.6f %10.6f  ",i,max,mean,worst,vari);
+			if (i!=0)
+			{
+				setcolor(RED);
+				line(prex,bprey,curx,bcury);
+				setcolor(YELLOW);
+				line(prex,mprey,curx,mcury);
+				setcolor(BLUE);
+				line(prex,wprey,curx,wcury);
+				setcolor(WHITE);
+				line(prex,vprey,curx,vcury);
+			}
+			prex=curx;
+			bprey=bcury;
+			mprey=mcury;
+			wprey=wcury;
+			vprey=vcury;
+		}
+
+		if ((te==1)||(i==iter))
+		{
+			gotoxy(5,4);
+			printf(" completed\t");
+			if ((fp1=fopen(resultFile,"a"))==NULL)
+			{
+				fprintf(stderr,"cannot open %s for writing\n",resultFile);
+				exit(1);
+			}
+			savePara(fp1,datFile,patternFile,weightFile,resultFile,
+					H,iter,K,N,P,M,total,popsize,length,c_rate,m_rate,
+					criti,flag_m,fit_shift,m_t,flag_c);
+
+			fprintf(fp1,"generation: %d\n",i);
+			fprintf(fp1,"begin time at: %s\n",ctime(&begin));
+			finish=time(NULL);
+			fprintf(fp1,"finish time at: %s\n",ctime(&finish));
+			fclose(fp1);
+
+
+			printf(" Press any key to quit");
+			getch();
+			closegraph();
+			exit(1);
+		}
+
+		selectio(population,fit,popsize,length,ind,fit_shift);
+
+		crossove(population,length,popsize,c_rate,ind,flag_c);
+
+		rm_rate=m_rate;
+		if (m_t==1)
+		{
+			mean=average(fit,popsize);
+			vari=variance(fit,mean,popsize);
+			if (vari<0.05)
+			{
+				status=(int)((0.05-vari)*100) +1;
+				rm_rate=status*m_rate;
+			}
+		}
+
+		for (j=0;j<popsize;j++)
+		{
+			if (j!=ind)
+				Bmutate(population[j],rm_rate,length,K,flag_m,gau);
+		}
+	}
+	/* release the asigned space */
+	for (i=0;i<total;i++)
+	{
+		free(pattern[i]);
+		free(target[i]);
+	}
+	free(pattern);
+	free(target);
+	free(fit);
+	for (i=0;i<popsize;i++)
+		free(population[i]);
+	free(population);
+	free(gau);
+
+	/* clean up */
+	gotoxy(5,4);
+	printf(" Press any key to quit");
+	getch();
+	closegraph();
+
+}
+
+int
+getParams(char *fileName,char *pFileName,char *wFileName,char *eFileName,
+				 int *h,int *cycle,int *k,int *n,int *p,
+				 int *m,int *total,int *p_size, double *c_rate,
+				 double *m_rate,double *cri,int *f_m,
+				 int *f_s,int *m_t,int *flag_c)
+/* char *fileName;
+char *pFileName;
+char *wFileName;
+char *eFileName;
+int  *h;
+int     *cycle;
+int     *k;
+int     *n;
+int     *p;
+int     *m;
+int     *p_size;
+double *c_rate;
+double *m_rate;
+double *cri; */
+{
+	FILE    *fp;
+
+	if ((fp=fopen(fileName,"rt"))==NULL)
+	{
+		fprintf(stderr,"cannot open %s file \n",fileName);
+		return 0;
+	}
+
+
+	if (fscanf(fp,"%s",pFileName)==NULL)
+	{
+		fprintf(stderr,"Error reading patternFileName in file %s\n",fileName);
+		return 0;
+	}
+
+	if (fscanf(fp,"%s",wFileName)==NULL)
+	{
+		fprintf(stderr,"Error reading weightFileName in file %s\n",fileName);
+		return 0;
+	}
+
+	if (fscanf(fp,"%s",eFileName)==NULL)
+	{
+		fprintf(stderr,"Error reading errorFileName in file %s\n",fileName);
+		return 0;
+	}
+
+	if (fscanf(fp,"%d",h)==NULL)
+	{
+		fprintf(stderr,"Error reading H in file %s\n",fileName);
+		return 0;
+	}
+
+	if (fscanf(fp,"%d",cycle)==NULL)
+	{
+		fprintf(stderr,"Error reading Iteration in file %s\n",fileName);
+		return 0;
+	}
+
+	if (fscanf(fp,"%d",k)==NULL)
+	{
+		fprintf(stderr,"Error reading K in file %s\n",fileName);
+		return 0;
+	}
+
+	if (fscanf(fp,"%d",n)==NULL)
+	{
+		fprintf(stderr,"Error reading N in file %s\n",fileName);
+		return 0;
+	}
+
+	if (fscanf(fp,"%d",p)==NULL)
+	{
+		fprintf(stderr,"Error reading P in file %s\n",fileName);
+		return 0;
+	}
+
+	if (fscanf(fp,"%d",m)==NULL)
+	{
+		fprintf(stderr,"Error reading M in file %s\n",fileName);
+		return 0;
+	}
+
+	if (fscanf(fp,"%d",total)==NULL)
+	{
+		fprintf(stderr,"Error reading total in file %s\n",fileName);
+		return 0;
+	}
+
+	if (fscanf(fp,"%d",p_size)==NULL)
+	{
+		fprintf(stderr,"Error reading popsize in file %s\n",fileName);
+		return 0;
+	}
+
+	if (fscanf(fp,"%lf",c_rate)==NULL)
+	{
+		fprintf(stderr,"Error reading c_rate in file %s\n",fileName);
+		return 0;
+	}
+
+	if (fscanf(fp,"%lf",m_rate)==NULL)
+	{
+		fprintf(stderr,"Error reading m_rate in file %s\n",fileName);
+		return 0;
+	}
+
+	if (fscanf(fp,"%lf",cri)==NULL)
+	{
+		fprintf(stderr,"Error reading crition in file %s\n",fileName);
+		return 0;
+	}
+
+	if (fscanf(fp,"%d",f_m)==NULL)
+	{
+		fprintf(stderr,"Error reading flag_m in file %s\n",fileName);
+		return 0;
+	}
+
+	if (fscanf(fp,"%d",f_s)==NULL)
+	{
+		fprintf(stderr,"Error reading fit_shift in file %s\n",fileName);
+		return 0;
+	}
+
+	if (fscanf(fp,"%d",m_t)==NULL)
+	{
+		fprintf(stderr,"Error reading m_t in file %s\n",fileName);
+		return 0;
+	}
+
+	if (fscanf(fp,"%d",flag_c)==NULL)
+	{
+		fprintf(stderr,"Error reading flag_c in file %s\n",fileName);
+		return 0;
+	}
+	fclose(fp);
+
+	return 1;
+}
+
+void
+savePara(FILE * ff,char *fileName,char *pFileName,char *wFileName,char *eFileName,
+				 int h,int cycle,int k,int n,int p,
+				 int m,int total,int p_size,int len, double c_rate,
+				 double m_rate,double cri,int f_m,
+				 int f_s,int m_t,int flag_c)
+{
+	fprintf(ff,"\tdataFile ...................%s\n",fileName);
+	fprintf(ff,"\tpatternFile ................%s\n",pFileName);
+	fprintf(ff,"\tweightFile .................%s\n",wFileName);
+	fprintf(ff,"\tresultFile .................%s\n",eFileName);
+	fprintf(ff,"\tH (number of hidden) .......%d\n",h);
+	fprintf(ff,"\titer (generation) ..........%d\n",cycle);
+	fprintf(ff,"\tK (K bits for eachPara).....%d\n",k);
+	fprintf(ff,"\tN (input dim) ..............%d\n",n);
+	fprintf(ff,"\tP (output dim) .............%d\n",p);
+	fprintf(ff,"\tM (total training pats) ....%d\n",m);
+	fprintf(ff,"\ttotal (total pats) .........%d\n",total);
+	fprintf(ff,"\tpopsize ....................%d\n",p_size);
+	fprintf(ff,"\tlength .....................%d\n",len);
+	fprintf(ff,"\tc_rate (crossover) .........%f\n",c_rate);
+	fprintf(ff,"\tm_rate (mutation) ..........%f\n",m_rate);
+	fprintf(ff,"\tcriti (mean square) ........%f\n",cri);
+	fprintf(ff,"\tflag_m (1:var;0:cons) ......%d\n",f_m);
+	fprintf(ff,"\tfit_shift (1:yes,0:no) .....%d\n",f_s);
+	fprintf(ff,"\tm_t (m_rate(t), 1:y,0:n) ...%d\n",m_t);
+	fprintf(ff,"\tflag_c (0:one,1:unif,2:two).%d\n",flag_c);
+
+}
+
+
+int getPattern(char *fileName,double **in,double **out,int *TOTAL,int n,int p,int total)
+/* char *fileName;
+double  **in;
+double  **out;
+int     *TOTAL;
+int     n;
+int     p;
+int     total; */
+{
+
+	FILE *fp;
+
+	int i,j;
+
+	if ((fp=fopen(fileName,"rt"))==NULL)
+	{
+		fprintf(stderr,"Error opening %s\n",fileName);
+		return 0;
+	}
+
+	fscanf(fp,"%d",TOTAL);
+
+	if(total !=(*TOTAL))
+	{
+		fprintf(stderr,"total patterns in %s file not match\n",fileName);
+		return 0;
+	}
+
+
+
+	for (i=0;i<total;i++)
+	{
+		for (j=0;j<n;j++)
+			fscanf(fp,"%lf",&(in[i][j]));
+		for (j=0;j<p;j++)
+			fscanf(fp,"%lf",&(out[i][j]));
+	}
+	fclose(fp);
+
+	return 1;
+}
+
+int c_break(void)
+{
+	closegraph();
+	return 0;
+}
+
+
+
+
+
+
