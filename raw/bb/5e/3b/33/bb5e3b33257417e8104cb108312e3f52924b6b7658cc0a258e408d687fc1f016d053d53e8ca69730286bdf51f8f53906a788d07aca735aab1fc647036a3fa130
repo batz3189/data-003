@@ -1,0 +1,61 @@
+REM GENRE Indie
+REM DATE 2011-04
+PERFORMER "石进"
+TITLE "夜的钢琴曲"
+FILE "夜的钢琴曲.flac" WAVE
+  TRACK 01 AUDIO
+    TITLE "一个人的时光"
+    PERFORMER "石进"
+    INDEX 01 00:00:00
+  TRACK 02 AUDIO
+    TITLE "恍若如梦"
+    PERFORMER "石进"
+    INDEX 01 02:49:53
+  TRACK 03 AUDIO
+    TITLE "街道的寂寞"
+    PERFORMER "石进"
+    INDEX 01 06:09:19
+  TRACK 04 AUDIO
+    TITLE "雨葵"
+    PERFORMER "石进"
+    INDEX 01 08:49:69
+  TRACK 05 AUDIO
+    TITLE "夜的钢琴曲（五）"
+    PERFORMER "石进"
+    INDEX 01 12:47:04
+  TRACK 06 AUDIO
+    TITLE "可惜不是双鱼座"
+    PERFORMER "石进"
+    INDEX 01 15:00:17
+  TRACK 07 AUDIO
+    TITLE "幸福时光"
+    PERFORMER "石进"
+    INDEX 01 17:13:08
+  TRACK 08 AUDIO
+    TITLE "花的微笑"
+    PERFORMER "石进"
+    INDEX 01 19:06:45
+  TRACK 09 AUDIO
+    TITLE "下雨时你会想起谁"
+    PERFORMER "石进"
+    INDEX 01 23:08:37
+  TRACK 10 AUDIO
+    TITLE "隐形的思念"
+    PERFORMER "石进"
+    INDEX 01 25:24:57
+  TRACK 11 AUDIO
+    TITLE "忆"
+    PERFORMER "石进"
+    INDEX 01 28:36:65
+  TRACK 12 AUDIO
+    TITLE "1981"
+    PERFORMER "石进"
+    INDEX 01 32:03:14
+  TRACK 13 AUDIO
+    TITLE "一封家书"
+    PERFORMER "石进"
+    INDEX 01 34:08:67
+  TRACK 14 AUDIO
+    TITLE "惜别"
+    PERFORMER "石进"
+    INDEX 01 36:54:59
