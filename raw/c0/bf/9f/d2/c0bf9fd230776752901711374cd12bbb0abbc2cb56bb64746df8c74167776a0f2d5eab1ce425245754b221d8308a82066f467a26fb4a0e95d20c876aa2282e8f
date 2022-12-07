@@ -1,0 +1,16 @@
+REM GENRE Soundtrack
+REM DATE 2015
+REM DISCID 0C022D02
+REM COMMENT "ExactAudioCopy v1.1"
+PERFORMER "Sam Smith"
+TITLE "Writing's On The Wall"
+FILE "01 - Writing's On The Wall.wav" WAVE
+  TRACK 01 AUDIO
+    TITLE "Writing's On The Wall"
+    PERFORMER "Sam Smith"
+    INDEX 01 00:00:00
+FILE "02 - Writing's On The Wall (Instrumental).wav" WAVE
+  TRACK 02 AUDIO
+    TITLE "Writing's On The Wall (Instrumental)"
+    PERFORMER "Sam Smith"
+    INDEX 01 00:00:00
